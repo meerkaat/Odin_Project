@@ -1,0 +1,3 @@
+html {
+  background-color: rgb(44, 43, 43);
+}
