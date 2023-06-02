@@ -5,6 +5,10 @@ body {
   flex-direction: column;
 }
 
+.header, .hero, .main, .quote, .call-to-action, .footer {
+  padding: 0 5rem;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -12,6 +16,7 @@ body {
   background-color: #1f2937;
   color: #f9f1f8;
   /* border: 2px solid red; */
+  padding-top: 15px;
 }
 
 .hero {
@@ -42,10 +47,6 @@ body {
   background-color: grey;
 }
 
-.header > * {
-  padding-top: 15px;
-}
-
 ul, li {
   display: flex;
   text-decoration: none;
@@ -72,6 +73,3 @@ ul, li {
     flex: 1;
 }
 
-.header, .hero, .main, .quote, .call-to-action, .footer {
-  padding: 0 5rem;
-}
