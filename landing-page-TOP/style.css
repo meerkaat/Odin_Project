@@ -15,8 +15,13 @@ body {
   align-items: center;
   background-color: #1f2937;
   color: #f9f1f8;
-  /* border: 2px solid red; */
   padding-top: 15px;
+}
+
+ul, li {
+  display: flex;
+  text-decoration: none;
+  margin: 0 0 0 20px;
 }
 
 .hero {
@@ -47,30 +52,8 @@ body {
   background-color: grey;
 }
 
-ul, li {
-  display: flex;
-  text-decoration: none;
-  margin: 0 0 0 20px;
-}
-
 .main {
   flex: 1;
-}
-
-.quote {
-  background-color: #e5e7eb;
-  color: #1f2937;
-  flex: 1;
-}
-
-.call-to-action {
-  flex: 1;
-}
-
-.footer {
-    background-color: #1f2937;
-    color: #f9f1f8;
-    flex: 1;
 }
 
 .main {
@@ -113,4 +96,38 @@ parent's width */
   display: block;
   padding-top: 100%;
 }
+
+.quote {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote .container {
+  flex: 1;
+  font-size: 36px;
+  font-style: italic;
+  color: #1f2937;
+}
+
+.quote .item2 {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+}
+
+.call-to-action {
+  flex: 1;
+}
+
+.footer {
+    background-color: #1f2937;
+    color: #f9f1f8;
+    flex: 1;
+}
+
+
 
