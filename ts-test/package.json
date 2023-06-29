@@ -1,0 +1,12 @@
+{
+  "name": "ts-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/basicFncs.js",
+  "scripts": {
+    "start": "tsc && node dist/basicFncs.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
