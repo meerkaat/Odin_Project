@@ -16,4 +16,3 @@ function FizzBuzz(num) {
     }
 }
 FizzBuzz(20);
-//# sourceMappingURL=fizzBuzz.js.map

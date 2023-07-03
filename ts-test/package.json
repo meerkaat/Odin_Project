@@ -2,7 +2,7 @@
   "name": "ts-test",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/basicFncs.js",
+  "main": "dist/fizzBuzz.js",
   "scripts": {
     "start": "tsc && node dist/fizzBuzz.js"
   },

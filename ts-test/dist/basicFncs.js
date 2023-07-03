@@ -12,4 +12,3 @@ function lastLetter(word) {
     return word.slice(-1);
 }
 console.log(lastLetter("hello"));
-//# sourceMappingURL=basicFncs.js.map
