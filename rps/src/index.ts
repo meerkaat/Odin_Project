@@ -1,26 +1,30 @@
-const choices: string[] = ["rock", "paper", "scissors"];
+type PRS = "rock" | "paper" | "scissors";
 
-const computerChoice = (): string => {
+const choices: readonly [PRS, PRS, PRS] = ["rock", "paper", "scissors"];
+
+const computerChoice = () => {
   const min = Math.ceil(0);
   const max = Math.floor(2);
   const randNum = Math.floor(Math.random() * (max - min + 1) + min);
   return choices[randNum];
 }
 
-const userChoice = (num: number): string => {
+const userChoice = (num: number) => {
   return choices[num];
 }
 
-function evaluateWinner(uc: string, cc: string) {
+function evaluateWinner(uc: PRS, cc: PRS): string {
+  let condition: string;
   if (uc === cc) {
-    return "Tie";
+    condition = "Tie";
   } else if (uc === "rock") {
-    return cc === "paper" ? "Computer Wins" : "User Wins";
+    condition = cc === "paper" ? "Computer Wins" : "User Wins";
   } else if (uc === "paper") {
-    return cc === "scissors" ? "Computer Wins" : "User Wins";
+    condition = cc === "scissors" ? "Computer Wins" : "User Wins";
   } else if (uc === "scissors") {
-    return cc === "rock" ? "Computer Wins" : "User Wins";
-  }
+    condition = cc === "rock" ? "Computer Wins" : "User Wins";
+  } else throw new Error("Expected: rock, paper, or scrissors");
+  return condition;
 }
 
 const userResult = userChoice(1);
