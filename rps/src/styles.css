@@ -11,54 +11,93 @@ body {
 }
 
 body {
-  display: grid;
-  align-items: center;
-}
-
-.parent {
-  border: 3px orange dotted;
-  display: grid;
-  grid-template-rows: repeat(2, 50px);
-  grid-template-columns: repeat(3, 40%);
-  gap: 10%;
-  place-items: center;
-  align-content: center;
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin: auto;
 }
 
-.player {
-  border: 1px red solid;
-  grid-column: 1;
+.wrapper {
+  border: 2px red dotted;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30%;
+  gap: 1rem;
 }
 
+.user,
 .computer {
-  border: 1px red solid;
-  grid-column: 3;
+  font-size: 5rem;
+  text-align: center;
 }
 
-.left,
-.right {
-  padding-top: 30%;
+.btn {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  filter: grayscale(100);
+  opacity: 60%;
+  text-shadow:
+    0 0 0px white, 
+    -1px -1px 1px grey, 
+    -1px 1px 1px grey, 
+    1px 1px 1px grey, 
+    1px -1px 1px grey;
+  transition-duration: 400ms;
 }
 
-.left {
-  border: 1px blue solid;
-  grid-row: 2;
+.btn:hover {
+  transform: scale(1.4);
+  transition-duration: 400ms;
+  filter: none;
+  opacity: 100%;
+  text-shadow:
+    0 0 0px white, 
+    -1px -1px 2px gray, 
+    -1px 1px 2px gray, 
+    1px 1px 2px gray, 
+    1px -1px 2px gray;
 }
 
-.right {
-  border: 1px green solid;
-  grid-column: 3;
-  grid-row: 2;
+.btn-con {
+  padding: .5rem;
 }
 
-.btn-wrapper {
-  margin: auto;
-  display: grid;
-  grid-template-rows: auto;
-  gap: .5rem;
-  grid-column: 2;
-  grid-row: 2;
+/* .user-btn-con {
+  border: 3px orange dotted;
+  border-radius: 15px;
+} */
+
+.user-test {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
+
+.players-con {
+  font-size: 2rem;
+  border: 2px green dotted;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.test {
+  display: flex;
+  align-items: center;
+}
+
+.round-con {
+  border: 2px green solid;
+  padding-right: 2rem;
+}
+
+.test1 {
+  display: flex;
+}
+
+/* .computer-con {
+  border: 2px green dotted;
+  display: flex;
+  flex-direction: column;
+} */
