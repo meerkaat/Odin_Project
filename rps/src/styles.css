@@ -21,14 +21,16 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 30%;
-  gap: 1rem;
+}
+
+.players {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .user,
 .computer {
-  font-size: 5rem;
-  text-align: center;
+  font-size: 7rem;
 }
 
 .btn {
@@ -63,41 +65,29 @@ body {
   padding: .5rem;
 }
 
-/* .user-btn-con {
-  border: 3px orange dotted;
-  border-radius: 15px;
-} */
-
-.user-test {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.players-con {
+.rows-con {
   font-size: 2rem;
   border: 2px green dotted;
   display: flex;
   flex-direction: row;
   gap: 2rem;
+  padding: .5rem 0 .5rem 0;
 }
 
-.test {
+/* .round-con {
+  border: 2px green solid;
+  margin-right: 10%;
+  width: 3rem;
+  text-align: center;
+  font-size: 1.3rem;
+} */
+
+.user-col-con, .computer-col-con {
+  border: 2px blue solid;
   display: flex;
   align-items: center;
 }
 
-.round-con {
-  border: 2px green solid;
-  padding-right: 2rem;
+.computer-row-one {
+  border: 2px rgba(214, 52, 44, 0.688) solid;
 }
-
-.test1 {
-  display: flex;
-}
-
-/* .computer-con {
-  border: 2px green dotted;
-  display: flex;
-  flex-direction: column;
-} */

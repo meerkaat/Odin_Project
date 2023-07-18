@@ -8,6 +8,8 @@ npm run start
 npm install -D @types/web
 
 
-📜⚔️🪨
+📜
+⚔️
+🪨
 🧙‍♂️
 🤖
