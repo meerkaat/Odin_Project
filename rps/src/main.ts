@@ -84,80 +84,28 @@ console.log(getGood());
 // console.log(winner);
 
 // Simulate multiple games:
-for (let i = 0; i < 30; i += 1) {
-  console.log(getGood());
-}
+// for (let i = 0; i < 30; i += 1) {
+//   console.log(getGood());
+// }
 
-
-
-/*
-0 = rock
-1 = paper
-2 = scissors
-*/
-// create generic type for `num` to have a return type for numToChoice
-// function numToChoice(num: number) {
-//   let choice;
-//   switch (num) {
-//     case 0:
-//       return "rock";
-//     case 1:
-//       return "paper";
-//     case 2:
-//       return "scissors";
+// if (typeof document !== "undefined") {
+const emojiBtn = Array.from(document.getElementsByClassName('btn'));
+const rowBackground = document.getElementById('round-selector') as HTMLDivElement;
+let nextPos = document.getElementById('row-one') as HTMLDivElement;
+let rowBackgroundPos = nextPos.getBoundingClientRect() as DOMRect;
+let test = document.createElement('button');
+document.body.style.backgroundColor = "black";
+// emojiBtn.forEach(btn => {
+//   btn.addEventListener('onclick', (e) => {
+//     let top = rowBackgroundPos.top;
+//     let right = rowBackgroundPos.right;
+//     let bottom = rowBackgroundPos.bottom;
+//     let left = rowBackgroundPos.left;
+//     rowBackground.style.top = "top";
+//     rowBackground.style.right = "right";
+//     rowBackground.style.bottom = "bottom";
+//     rowBackground.style.left = "left";
 //   }
-// };
-
-/*
----
-This is the type vscode gave.―――――――৲
-                                     ⤵
----
-function numToChoice(num: number): "rock" | "paper" | "scissors" | undefined {
-  let choice;
-  switch (num) {
-    case 0:
-      return "rock";
-    case 1:
-      return "paper";
-    case 2:
-      return "scissors";
-  }
-};
-*/
-
-/*
-function numToChoice(num: number): string {
-  let choice;
-  switch (num) {
-    case 0:
-      let choice: string = "rock";
-    case 1:
-      let choice: string = "paper";
-    case 2:
-      let choice: string = "scissors";
-  }
-  return choice;
-};
-*/
-
-/*
-function numToChoice(num: number): string {
-  let choice;
-  switch (num) {
-    case 0: {
-      let choice: string = "rock";
-      break;
-    }
-    case 1: {
-      let choice: string = "paper";
-      break;
-    }
-    case 2: {
-      let choice: string = "scissors";
-      break;
-    }
-  }
-  return choice;
-};
-*/
+//   )
+// })
+// }

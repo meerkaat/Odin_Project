@@ -40,18 +40,33 @@ body {
 .rows-con {
   display: flex;
   justify-content: space-evenly;
-  padding: .4rem 0 .4rem 0;
-  border: 2px red solid;
+  box-sizing: content-box;
+}
+
+#round-selector {
+  padding: .4rem;
+  background-color: rgba(255, 255, 255, 0.537);
+  position: relative;
+  top: 5px;
+  bottom: 5px;
+  left: 200px;
+  width: 100px;
+  
+  z-index: -1;
+}
+
+.user-col-con,
+.computer-col-con {
+  padding: .4rem;
 }
 
 .players,
 .rows-con {
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .btn {
   font-size: 2.3rem;
-  padding: .4rem;
   background: none;
   border: none;
   filter: grayscale(100);
@@ -78,7 +93,7 @@ body {
     1px -1px 2px gray;
 }
 
-.computer-row-one {
+/* .computer-row-one {
   border-radius: 5px;
   background-color: rgba(12, 161, 20, 0.222);
 }
@@ -96,9 +111,10 @@ body {
 .row-two {
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.537);
-}
+} */
 
 .row-three {
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.537);
 }
+

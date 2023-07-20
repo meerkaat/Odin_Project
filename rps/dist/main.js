@@ -27,10 +27,10 @@ function evaluateGame(uc, cc) {
     if (uc === cc)
         return "Tie";
     if (uc === "rock")
-        return cc === "paper" ? "Computer" : "User";
+        return cc === "paper" ? Verdict.Computer : Verdict.User;
     if (uc === "paper")
-        return cc === "scissors" ? "Computer" : "User";
-    return cc === "rock" ? "Computer" : "User";
+        return cc === "scissors" ? Verdict.Computer : Verdict.User;
+    return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
 const getGood = () => {
     const score = {
@@ -51,7 +51,9 @@ const getGood = () => {
             : "Tie";
 };
 console.log(getGood());
-for (let i = 0; i < 30; i += 1) {
-    console.log(getGood());
+if (typeof document !== "undefined") {
+    const rowBackground = document.getElementById('round-selector');
+    let rowBackgroundPos = rowBackground.getBoundingClientRect();
+    console.log(rowBackgroundPos);
 }
 export {};
