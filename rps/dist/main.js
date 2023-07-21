@@ -28,8 +28,11 @@ function evaluateGame(uc, cc) {
         return "Tie";
     if (uc === "rock")
         return cc === "paper" ? Verdict.Computer : Verdict.User;
-    if (uc === "paper")
-        return cc === "scissors" ? Verdict.Computer : Verdict.User;
+    if (uc === "paper") {
+        return cc === "scissors"
+            ? Verdict.Computer
+            : Verdict.User;
+    }
     return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
 const getGood = () => {
@@ -46,14 +49,34 @@ const getGood = () => {
         score[verdict] += 1;
         rounds++;
     }
-    return score.Computer > score.User ? "Computer"
-        : score.User > score.Computer ? "User"
+    return score.Computer > score.User
+        ? "Computer"
+        : score.User > score.Computer
+            ? "User"
             : "Tie";
 };
 console.log(getGood());
-if (typeof document !== "undefined") {
-    const rowBackground = document.getElementById('round-selector');
-    let rowBackgroundPos = rowBackground.getBoundingClientRect();
-    console.log(rowBackgroundPos);
+function getElementByIdOrThrow(selector, msg = "Element not found") {
+    const element = document.getElementById(selector);
+    if (!element)
+        throw new Error(msg);
+    return element;
 }
+const userCol = getElementByIdOrThrow("user-row-one");
+let userColPos = userCol.getBoundingClientRect();
+const userCol2 = getElementByIdOrThrow("user-row-two");
+let userColPos2 = userCol2.getBoundingClientRect();
+const roundSelector = getElementByIdOrThrow("round-selector");
+const btn = getElementByIdOrThrow("btn");
+window.addEventListener("load", (e) => {
+    for (const key of ["top", "right", "bottom", "left", "width", "height"]) {
+        roundSelector.style[key] = String(userColPos[key] + "px");
+    }
+});
+btn.addEventListener("click", (e) => {
+    for (const key of ["top", "right", "bottom", "left", "width", "height"]) {
+        roundSelector.style[key] = String(userColPos2[key] + "px");
+    }
+});
+console.log(userColPos);
 export {};

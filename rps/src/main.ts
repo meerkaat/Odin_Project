@@ -44,7 +44,11 @@ type Verdict = typeof Verdict[keyof typeof Verdict];
 function evaluateGame(uc: PRS, cc: PRS): Verdict {
   if (uc === cc) return "Tie";
   if (uc === "rock") return cc === "paper" ? Verdict.Computer : Verdict.User;
-  if (uc === "paper") return cc === "scissors" ? Verdict.Computer : Verdict.User;
+  if (uc === "paper") {
+    return cc === "scissors"
+      ? Verdict.Computer
+      : Verdict.User;
+  }
   // Ok, then `uc` has to be `"scissors"`:
   return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
@@ -69,32 +73,54 @@ const getGood = (): Verdict => {
     rounds++;
   }
 
-  return score.Computer > score.User ? "Computer"
-    : score.User > score.Computer ? "User"
+  return score.Computer > score.User
+    ? "Computer"
+    : score.User > score.Computer
+    ? "User"
     : "Tie";
-}
+};
 
 console.log(getGood());
 
-// const userResult = getUserChoice(1);
-// const computerResult = getComputerChoice();
-// const winner = evaluateWinner(userResult, computerResult);
-// console.log("Computer: " + computerResult);
-// console.log("User: " + userResult);
-// console.log(winner);
+// const userCol = document.getElementById('user-col-one');
+// if (!userCol) throw new Error("Error: userCol null");
+function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
+  selector: string,
+  msg = "Element not found",
+): T {
+  const element = document.getElementById(selector);
+  if (!element) throw new Error(msg);
+  return element as T;
+}
 
-// Simulate multiple games:
-// for (let i = 0; i < 30; i += 1) {
-//   console.log(getGood());
-// }
+const userCol = getElementByIdOrThrow<HTMLDivElement>("user-row-one");
+let userColPos = userCol.getBoundingClientRect();
+const userCol2 = getElementByIdOrThrow<HTMLDivElement>("user-row-two");
+let userColPos2 = userCol2.getBoundingClientRect();
+const roundSelector = getElementByIdOrThrow<HTMLDivElement>("round-selector");
 
-// if (typeof document !== "undefined") {
-const emojiBtn = Array.from(document.getElementsByClassName('btn'));
-const rowBackground = document.getElementById('round-selector') as HTMLDivElement;
-let nextPos = document.getElementById('row-one') as HTMLDivElement;
-let rowBackgroundPos = nextPos.getBoundingClientRect() as DOMRect;
-let test = document.createElement('button');
-document.body.style.backgroundColor = "black";
+const btn = getElementByIdOrThrow<HTMLButtonElement>("btn");
+
+window.addEventListener("load", (e) => {
+  for (const key of ["top", "right", "bottom", "left", "width", "height"] as const) {
+    roundSelector.style[key] = String(userColPos[key] + "px");
+  }
+});
+
+btn.addEventListener("click", (e) => {
+  for (const key of ["top", "right", "bottom", "left", "width", "height"] as const) {
+    roundSelector.style[key] = String(userColPos2[key] + "px");
+  }
+});
+
+console.log(userColPos);
+
+// const emojiBtn = Array.from(document.getElementsByClassName('btn'));
+// const rowBackground = document.getElementById('round-selector') as HTMLDivElement;
+// let nextPos = document.getElementById('row-one') as HTMLDivElement;
+// let rowBackgroundPos = nextPos.getBoundingClientRect() as DOMRect;
+// let test = document.createElement('button');
+// document.body.style.backgroundColor = "black";
 // emojiBtn.forEach(btn => {
 //   btn.addEventListener('onclick', (e) => {
 //     let top = rowBackgroundPos.top;
@@ -108,4 +134,16 @@ document.body.style.backgroundColor = "black";
 //   }
 //   )
 // })
+// }
+
+// const userResult = getUserChoice(1);
+// const computerResult = getComputerChoice();
+// const winner = evaluateWinner(userResult, computerResult);
+// console.log("Computer: " + computerResult);
+// console.log("User: " + userResult);
+// console.log(winner);
+
+// Simulate multiple games:
+// for (let i = 0; i < 30; i += 1) {
+//   console.log(getGood());
 // }
