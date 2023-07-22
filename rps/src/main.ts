@@ -101,17 +101,24 @@ const roundSelector = getElementByIdOrThrow<HTMLDivElement>("round-selector");
 
 const btn = getElementByIdOrThrow<HTMLButtonElement>("btn");
 
-window.addEventListener("load", (e) => {
-  for (const key of ["top", "right", "bottom", "left", "width", "height"] as const) {
-    roundSelector.style[key] = String(userColPos[key] + "px");
-  }
-});
-
 btn.addEventListener("click", (e) => {
-  for (const key of ["top", "right", "bottom", "left", "width", "height"] as const) {
-    roundSelector.style[key] = String(userColPos2[key] + "px");
-  }
-});
+  
+  userCol2.append(roundSelector);
+  // roundSelector.style.transitionDuration = "50s";
+  roundSelector.style.backgroundColor = "black";
+})
+
+// window.addEventListener("load", (e) => {
+//   for (const key of ["top", "right", "bottom", "left", "width", "height"] as const) {
+//     roundSelector.style[key] = String(userColPos[key] + "px");
+//   }
+// });
+
+// btn.addEventListener("click", (e) => {
+//   for (const key of ["top", "right", "bottom", "left", "width", "height"] as const) {
+//     roundSelector.style[key] = String(userColPos2[key] + "px");
+//   }
+// });
 
 console.log(userColPos);
 

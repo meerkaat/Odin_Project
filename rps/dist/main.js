@@ -68,15 +68,9 @@ const userCol2 = getElementByIdOrThrow("user-row-two");
 let userColPos2 = userCol2.getBoundingClientRect();
 const roundSelector = getElementByIdOrThrow("round-selector");
 const btn = getElementByIdOrThrow("btn");
-window.addEventListener("load", (e) => {
-    for (const key of ["top", "right", "bottom", "left", "width", "height"]) {
-        roundSelector.style[key] = String(userColPos[key] + "px");
-    }
-});
 btn.addEventListener("click", (e) => {
-    for (const key of ["top", "right", "bottom", "left", "width", "height"]) {
-        roundSelector.style[key] = String(userColPos2[key] + "px");
-    }
+    userCol2.append(roundSelector);
+    roundSelector.style.backgroundColor = "black";
 });
 console.log(userColPos);
 export {};

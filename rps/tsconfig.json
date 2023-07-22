@@ -23,7 +23,7 @@
     "target": "esnext",
     "lib": ["esnext"],
 
-    "types": ["web"],
+    // "types": ["web"],
 
     "jsx": "react-jsx",
 
