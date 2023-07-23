@@ -1,71 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Paper, Rock, Scissors</title>
+
+  <!-- <link rel="icon" href="/icon.png" /> -->
+  <link rel="stylesheet" href="./styles.css" />
   <script type="module" src="../dist/main.js"></script>
-  <title>Document</title>
 </head>
 
 <body>
-
-  <div class="wrapper">
-
-    <div class="players">
-      <div class="user">🧙‍♂️</div>
-      <div class="computer">🤖</div>
-    </div>
-
-
-    <!-- ----- -->
-    <div class="rows-con row-one">
-      <div id="round-selector"></div>
-      <div id="user-row-one" class="user-col-con user-row-one">
-        <button type="button" id="btn" class="btn emoji">🪨</button>
-        <button type="button" class="btn emoji">📜</button>
-        <button type="button" class="btn emoji">⚔️</button>
-      </div>
-      <div class="computer-col-con computer-row-one">
-        <button type="button" class="btn emoji">🪨</button>
-        <button type="button" class="btn emoji">📜</button>
-        <button type="button" class="btn emoji">⚔️</button>
-      </div>
-    </div>
-
-    <div id="user-row-two" class="rows-con row-two">
-      <div class="user-col-con user-row-two">
-        <button type="button" class="btn emoji">🪨</button>
-        <button type="button" class="btn emoji">📜</button>
-        <button type="button" class="btn emoji">⚔️</button>
-      </div>
-      <div class="computer-col-con computer-row-two">
-        <button type="button" class="btn emoji">🪨</button>
-        <button type="button" class="btn emoji">📜</button>
-        <button type="button" class="btn emoji">⚔️</button>
-      </div>
-    </div>
-
-    <div id="user-row-three" class="rows-con row-three">
-      <div class="user-col-con user-row-three">
-        <button type="button" class="btn emoji">🪨</button>
-        <button type="button" class="btn emoji">📜</button>
-        <button type="button" class="btn emoji">⚔️</button>
-      </div>
-      <div class="computer-col-con computer-row-three">
-        <button type="button" class="btn emoji">🪨</button>
-        <button type="button" class="btn emoji">📜</button>
-        <button type="button" class="btn emoji">⚔️</button>
-      </div>
-    </div>
-
-    <!-- ----- -->
-
-
-
+  <div>
+    <p id="message">Let's play paper rock scissors!</p>
+    <p id="result">❓</p>
   </div>
-
+  <div>
+    <button id="btn-paper" data-choice="paper">📜</button>
+    <button id="btn-rock" data-choice="rock">🗿</button>
+    <button id="btn-scissors" data-choice="scissors">⚔️</button>
+  </div>
 </body>
 
 </html>
