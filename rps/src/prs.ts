@@ -52,9 +52,20 @@ export function evaluateGame(uc: PRS, cc: PRS): Verdict {
   return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
 
+
+// I did this because retrun was giving error "Type 'string' is not assignable to type 'EmojiOptions'"
 type EmojiOptions = "📜" | "🪨" | "⚔️" | "✅" | "❌" | "🤷";
 
-const stringToEmoji = {
+type EmojiType = {
+  paper: EmojiOptions;
+  rock: EmojiOptions;
+  scissors: EmojiOptions;
+  win: EmojiOptions;
+  lose: EmojiOptions;
+  tie: EmojiOptions;
+}
+
+const stringToEmoji: EmojiType = {
   paper: "📜",
   rock: "🪨",
   scissors: "⚔️",
@@ -64,7 +75,7 @@ const stringToEmoji = {
 }
 
 
-export function choiceToEmoji(text: PRS | Verdict): string {
+export function choiceToEmoji(text: PRS | Verdict): EmojiOptions {
   if (text === "paper") return stringToEmoji.paper;
   if (text === "rock") return stringToEmoji.rock;
   if (text === "scissors") return stringToEmoji.scissors;
