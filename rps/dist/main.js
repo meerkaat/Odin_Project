@@ -1,4 +1,4 @@
-import { choices, evaluateGame, getComputerChoice, isValidChoice, } from "./prs.js";
+import { choices, evaluateGame, getComputerChoice, choiceToEmoji, isValidChoice, } from "./prs.js";
 import { assert } from "./assert.js";
 function getElementByIdOrThrow(selector, msg = "Element not found") {
     const element = document.getElementById(selector);
@@ -9,6 +9,7 @@ function getElementByIdOrThrow(selector, msg = "Element not found") {
 function main() {
     const messageElm = getElementByIdOrThrow("message");
     const resultElm = getElementByIdOrThrow("result");
+    const comChoice = getElementByIdOrThrow("com-choice");
     for (const prs of choices) {
         const btn = getElementByIdOrThrow(`btn-${prs}`);
         btn.addEventListener("click", (ev) => {
@@ -17,6 +18,8 @@ function main() {
             const cc = getComputerChoice();
             const verdict = evaluateGame(uc, cc);
             console.log({ uc, cc, verdict });
+            comChoice.textContent = choiceToEmoji(cc);
+            resultElm.textContent = choiceToEmoji(verdict);
         });
     }
 }

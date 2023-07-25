@@ -2,6 +2,7 @@ import {
   choices,
   evaluateGame,
   getComputerChoice,
+  choiceToEmoji,
   isValidChoice,
   Verdict,
 } from "./prs.js";
@@ -20,6 +21,7 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
 function main() {
   const messageElm = getElementByIdOrThrow<HTMLDivElement>("message");
   const resultElm = getElementByIdOrThrow<HTMLDivElement>("result");
+  const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 
   // const paperBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-paper");
   // const rockBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-rock");
@@ -41,13 +43,16 @@ function main() {
         typeof uc === "string" && isValidChoice(uc),
         "Not a valid choice",
       );
-    
+
       const cc = getComputerChoice();
       const verdict = evaluateGame(uc, cc);
-    
+
       console.log({ uc, cc, verdict });
-    
+
       // TODO: Update message and result elements
+
+      comChoice.textContent = choiceToEmoji(cc);
+      resultElm.textContent = choiceToEmoji(verdict);
     });
   }
 }

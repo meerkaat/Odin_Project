@@ -51,3 +51,26 @@ export function evaluateGame(uc: PRS, cc: PRS): Verdict {
   // Ok, then `uc` has to be `"scissors"`:
   return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
+
+type EmojiOptions = "📜" | "🪨" | "⚔️" | "✅" | "❌" | "🤷";
+
+const stringToEmoji = {
+  paper: "📜",
+  rock: "🪨",
+  scissors: "⚔️",
+  win: "✅",
+  lose: "❌",
+  tie: "🤷",
+}
+
+
+export function choiceToEmoji(text: PRS | Verdict): string {
+  if (text === "paper") return stringToEmoji.paper;
+  if (text === "rock") return stringToEmoji.rock;
+  if (text === "scissors") return stringToEmoji.scissors;
+  if (text === Verdict.Computer) return stringToEmoji.lose;
+  if (text === Verdict.User) {
+    return stringToEmoji.win;
+  }
+  return stringToEmoji.tie;
+}

@@ -11,6 +11,11 @@ What happens when win?
     - loser - red
 
 
+## Questions
+
+Why can't `choiceToEmoji` have return type of `EmojiOptions`?
+
+
 ## Snippets
 
 ```css
