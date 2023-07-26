@@ -10,17 +10,24 @@ What happens when win?
     - winner - green
     - loser - red
 
+## To-do
+- [ ] create rounds - best of three
+  - [ ] no tie on tie-breaker 
+      - computer doesn't choose user choice 
+- [ ] layout
+- [ ] round/background selector
+- [x] win/lose selector
+- [ ] emoji state
+- [ ] twemoji?
 
 ## Questions
-
-Why can't `choiceToEmoji` have return type of `EmojiOptions`?
 
 
 ## Snippets
 
 ```css
 html {
-  background-color: rgb(44, 43, 43);
+  background-color: rgba(251, 228, 53, 0.555);
 }
 ```
 
@@ -41,11 +48,3 @@ npm install -D @types/web
 - 🪨
 - 🧙‍♂️
 - 🤖
-
-
-## To-do
-- [ x ] layout
-- [ ] round/background selector
-- [ ] win/lose selector
-- [ ] emoji state
-- [ ] twemoji?

@@ -1,8 +1,9 @@
 import {
   choices,
+  choiceToEmoji,
+  emojiMapping,
   evaluateGame,
   getComputerChoice,
-  choiceToEmoji,
   isValidChoice,
   Verdict,
 } from "./prs.js";
@@ -49,10 +50,12 @@ function main() {
 
       console.log({ uc, cc, verdict });
 
-      // TODO: Update message and result elements
-
-      comChoice.textContent = choiceToEmoji(cc);
-      resultElm.textContent = choiceToEmoji(verdict);
+      // TODO: 
+      // [DONE DID] - Update message and result elements
+      // comChoice.textContent = choiceToEmoji(cc);
+      // resultElm.textContent = choiceToEmoji(verdict);
+      comChoice.textContent = emojiMapping[cc];
+      resultElm.textContent = emojiMapping[verdict];
     });
   }
 }

@@ -44,44 +44,75 @@ export function evaluateGame(uc: PRS, cc: PRS): Verdict {
   if (uc === cc) return "Tie";
   if (uc === "rock") return cc === "paper" ? Verdict.Computer : Verdict.User;
   if (uc === "paper") {
-    return cc === "scissors"
-      ? Verdict.Computer
-      : Verdict.User;
+    return cc === "scissors" ? Verdict.Computer : Verdict.User;
   }
   // Ok, then `uc` has to be `"scissors"`:
   return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
 
-
-// I did this because retrun was giving error "Type 'string' is not assignable to type 'EmojiOptions'"
-type EmojiOptions = "📜" | "🪨" | "⚔️" | "✅" | "❌" | "🤷";
-
-type EmojiType = {
-  paper: EmojiOptions;
-  rock: EmojiOptions;
-  scissors: EmojiOptions;
-  win: EmojiOptions;
-  lose: EmojiOptions;
-  tie: EmojiOptions;
-}
-
-const stringToEmoji: EmojiType = {
+export const emojiMapping: Record<PRS | Verdict, string> = {
   paper: "📜",
   rock: "🪨",
   scissors: "⚔️",
-  win: "✅",
-  lose: "❌",
-  tie: "🤷",
-}
+  [Verdict.User]: "🇼",
+  [Verdict.Computer]: "🇱",
+  [Verdict.Tie]: "🤷",
+};
 
+// I did this because retrun was giving error "Type 'string' is not assignable to type 'EmojiOptions'"
+type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷";
+
+// type EmojiType = Record<
+//   | "paper"
+//   | "rock"
+//   | "scissors"
+//   | "win"
+//   | "lose"
+//   | "tie",
+//   EmojiOptions
+// >;
+
+// type EmojiType = {
+//   paper: EmojiOptions,
+//   rock: EmojiOptions,
+//   scissors: EmojiOptions,
+//   win: EmojiOptions,
+//   lose: EmojiOptions,
+//   tie: EmojiOptions,
+// };
+
+// const stringToEmoji: EmojiType = {
+//   paper: "📜",
+//   rock: "🪨",
+//   scissors: "⚔️",
+//   win: "🇼",
+//   lose: "🇱",
+//   tie: "🤷",
+// };
+
+const stringToEmoji = {
+  paper: "📜",
+  rock: "🪨",
+  scissors: "⚔️",
+  win: "🇼",
+  lose: "🇱",
+  tie: "🤷",
+} satisfies Record<string, EmojiOptions>;
 
 export function choiceToEmoji(text: PRS | Verdict): EmojiOptions {
+  // return {
+  //   paper: stringToEmoji.paper,
+  //   rock: stringToEmoji.rock,
+  //   scissors: stringToEmoji.scissors,
+  //   [Verdict.Computer]: stringToEmoji.lose,
+  //   [Verdict.User]: stringToEmoji.win,
+  //   [Verdict.Tie]: stringToEmoji.tie,
+  // }[text];
+
   if (text === "paper") return stringToEmoji.paper;
   if (text === "rock") return stringToEmoji.rock;
   if (text === "scissors") return stringToEmoji.scissors;
   if (text === Verdict.Computer) return stringToEmoji.lose;
-  if (text === Verdict.User) {
-    return stringToEmoji.win;
-  }
+  if (text === Verdict.User) return stringToEmoji.win;
   return stringToEmoji.tie;
 }
