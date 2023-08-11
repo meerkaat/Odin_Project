@@ -29,18 +29,24 @@ export function evaluateGame(uc, cc) {
     if (uc === "rock")
         return cc === "paper" ? Verdict.Computer : Verdict.User;
     if (uc === "paper") {
-        return cc === "scissors"
-            ? Verdict.Computer
-            : Verdict.User;
+        return cc === "scissors" ? Verdict.Computer : Verdict.User;
     }
     return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
+export const emojiMapping = {
+    paper: "📜",
+    rock: "🪨",
+    scissors: "⚔️",
+    [Verdict.User]: "🇼",
+    [Verdict.Computer]: "🇱",
+    [Verdict.Tie]: "🤷",
+};
 const stringToEmoji = {
     paper: "📜",
     rock: "🪨",
     scissors: "⚔️",
-    win: "✅",
-    lose: "❌",
+    win: "🇼",
+    lose: "🇱",
     tie: "🤷",
 };
 export function choiceToEmoji(text) {
@@ -52,8 +58,7 @@ export function choiceToEmoji(text) {
         return stringToEmoji.scissors;
     if (text === Verdict.Computer)
         return stringToEmoji.lose;
-    if (text === Verdict.User) {
+    if (text === Verdict.User)
         return stringToEmoji.win;
-    }
     return stringToEmoji.tie;
 }

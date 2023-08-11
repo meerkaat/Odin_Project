@@ -20,6 +20,7 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
 }
 
 function main() {
+
   const messageElm = getElementByIdOrThrow<HTMLDivElement>("message");
   const resultElm = getElementByIdOrThrow<HTMLDivElement>("result");
   const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
@@ -32,32 +33,50 @@ function main() {
   //   btn.addEventListener("click", (ev) => handleButtonClick(ev));
   // }
 
-  for (const prs of choices) {
-    const btn = getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`);
+  const btns = function createBtnArray(): HTMLButtonElement[] {
+                  let buttons: HTMLButtonElement[] = [];
+                  for (const prs of choices) {
+                    buttons.push(
+                      getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`)
+                    );
+                  }
+                  console.log(buttons);
+                  return buttons;
+                }
 
-    btn.addEventListener("click", (ev) => {
-      // const btn = ev.currentTarget;
-      // assert(btn instanceof HTMLButtonElement, "Event target is not a button!");
-      const uc = btn.getAttribute("data-choice");
-      // const uc = btn.dataset.choice;
-      assert(
-        typeof uc === "string" && isValidChoice(uc),
-        "Not a valid choice",
-      );
+  function computeRounds() {
+    let rounds: number = 1;
+    if (rounds !== 3) {
+      rounds++
+    }
 
-      const cc = getComputerChoice();
-      const verdict = evaluateGame(uc, cc);
+  // }
 
-      console.log({ uc, cc, verdict });
+  // for (const prs of choices) {
+  //   const btn = getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`);
 
-      // TODO: 
-      // [DONE DID] - Update message and result elements
-      // comChoice.textContent = choiceToEmoji(cc);
-      // resultElm.textContent = choiceToEmoji(verdict);
-      comChoice.textContent = emojiMapping[cc];
-      resultElm.textContent = emojiMapping[verdict];
-    });
-  }
+  //   btn.addEventListener("click", (ev) => {
+  //     // const btn = ev.currentTarget;
+  //     // assert(btn instanceof HTMLButtonElement, "Event target is not a button!");
+  //     const uc = btn.getAttribute("data-choice");
+  //     // const uc = btn.dataset.choice;
+  //     assert(
+  //       typeof uc === "string" && isValidChoice(uc),
+  //       "Not a valid choice",
+  //     );
+
+  //     const cc = getComputerChoice();
+  //     const verdict = evaluateGame(uc, cc);
+
+  //     console.log({ uc, cc, verdict });
+
+  //     // TODO: 
+  //     // [DONE DID] - Update message and result elements
+  //     // comChoice.textContent = choiceToEmoji(cc);
+  //     // resultElm.textContent = choiceToEmoji(verdict);
+  //     comChoice.textContent = emojiMapping[cc];
+  //     resultElm.textContent = emojiMapping[verdict];
+  //   });
+  // }
 }
-
 main();
