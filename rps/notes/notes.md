@@ -11,12 +11,14 @@ What happens when win?
     - loser - red
 
 ## To-do
-- [ ] create rounds - best of three
+- [x] create round counter
+  - [ ] refactor rounds counter; create function
+  - [ ] best of three
   - [ ] no tie on tie-breaker 
       - computer doesn't choose user choice 
+- [x] win/lose selector
 - [ ] layout
 - [ ] round/background selector
-- [x] win/lose selector
 - [ ] emoji state
 - [ ] twemoji?
 

@@ -33,50 +33,67 @@ function main() {
   //   btn.addEventListener("click", (ev) => handleButtonClick(ev));
   // }
 
-  const btns = function createBtnArray(): HTMLButtonElement[] {
-                  let buttons: HTMLButtonElement[] = [];
-                  for (const prs of choices) {
-                    buttons.push(
-                      getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`)
-                    );
-                  }
-                  console.log(buttons);
-                  return buttons;
-                }
-
-  function computeRounds() {
-    let rounds: number = 1;
-    if (rounds !== 3) {
-      rounds++
+  const btns = function (): HTMLButtonElement[] {
+    let buttons: HTMLButtonElement[] = [];
+    for (const prs of choices) {
+      buttons.push(
+        getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`)
+      );
     }
+    console.log(buttons);
+    return buttons;
+  }
 
+  function disableBtns(): void {
+    for (const btn of btns()) {
+      btn.disabled = true;
+    }
+  }
+
+  // function computeRounds() {
+  //   const round = getElementByIdOrThrow<HTMLParagraphElement>("round");
+  //   let roundNum: number = 1;
+  //   console.log(roundNum);
+  //   if (roundNum < 3) {
+  //     roundNum++
+  //   }
+  //   if (roundNum === 3) disableBtns();
+  //   round.textContent = `Round: ${roundNum}`;
   // }
 
-  // for (const prs of choices) {
-  //   const btn = getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`);
+  const round = getElementByIdOrThrow<HTMLParagraphElement>("round");
+  let roundNum: number = 1;
 
-  //   btn.addEventListener("click", (ev) => {
-  //     // const btn = ev.currentTarget;
-  //     // assert(btn instanceof HTMLButtonElement, "Event target is not a button!");
-  //     const uc = btn.getAttribute("data-choice");
-  //     // const uc = btn.dataset.choice;
-  //     assert(
-  //       typeof uc === "string" && isValidChoice(uc),
-  //       "Not a valid choice",
-  //     );
+  btns().forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
 
-  //     const cc = getComputerChoice();
-  //     const verdict = evaluateGame(uc, cc);
+      roundNum++;
+      console.log(roundNum);
+      if (roundNum === 3) {disableBtns()}
+      round.textContent = `Round: ${roundNum}`;
 
-  //     console.log({ uc, cc, verdict });
+      // const btn = ev.currentTarget;
+      // assert(btn instanceof HTMLButtonElement, "Event target is not a button!");
+      const uc = btn.getAttribute("data-choice");
+      // const uc = btn.dataset.choice;
+      assert(
+        typeof uc === "string" && isValidChoice(uc),
+        "Not a valid choice",
+      );
 
-  //     // TODO: 
-  //     // [DONE DID] - Update message and result elements
-  //     // comChoice.textContent = choiceToEmoji(cc);
-  //     // resultElm.textContent = choiceToEmoji(verdict);
-  //     comChoice.textContent = emojiMapping[cc];
-  //     resultElm.textContent = emojiMapping[verdict];
-  //   });
-  // }
+      const cc = getComputerChoice();
+      const verdict = evaluateGame(uc, cc);
+
+      // console.log({ uc, cc, verdict });
+
+      // TODO: 
+      // [DONE DID] - Update message and result elements
+      // comChoice.textContent = choiceToEmoji(cc);
+      // resultElm.textContent = choiceToEmoji(verdict);
+      comChoice.textContent = emojiMapping[cc];
+      resultElm.textContent = emojiMapping[verdict];
+    }
+    )});
+  
 }
 main();
