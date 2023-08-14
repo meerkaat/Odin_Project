@@ -49,16 +49,3 @@ const stringToEmoji = {
     lose: "🇱",
     tie: "🤷",
 };
-export function choiceToEmoji(text) {
-    if (text === "paper")
-        return stringToEmoji.paper;
-    if (text === "rock")
-        return stringToEmoji.rock;
-    if (text === "scissors")
-        return stringToEmoji.scissors;
-    if (text === Verdict.Computer)
-        return stringToEmoji.lose;
-    if (text === Verdict.User)
-        return stringToEmoji.win;
-    return stringToEmoji.tie;
-}

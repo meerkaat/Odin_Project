@@ -1,6 +1,6 @@
 import {
   choices,
-  choiceToEmoji,
+  // choiceToEmoji,
   emojiMapping,
   evaluateGame,
   getComputerChoice,
@@ -25,6 +25,11 @@ function main() {
   const resultElm = getElementByIdOrThrow<HTMLDivElement>("result");
   const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 
+  const round1 = getElementByIdOrThrow<HTMLParagraphElement>("round1");
+  const round2 = getElementByIdOrThrow<HTMLParagraphElement>("round2");
+  const round3 = getElementByIdOrThrow<HTMLParagraphElement>("round3");
+
+
   // const paperBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-paper");
   // const rockBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-rock");
   // const scissorsBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-scissors");
@@ -40,7 +45,6 @@ function main() {
         getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`)
       );
     }
-    console.log(buttons);
     return buttons;
   }
 
@@ -50,27 +54,25 @@ function main() {
     }
   }
 
-  // function computeRounds() {
-  //   const round = getElementByIdOrThrow<HTMLParagraphElement>("round");
-  //   let roundNum: number = 1;
-  //   console.log(roundNum);
-  //   if (roundNum < 3) {
-  //     roundNum++
-  //   }
-  //   if (roundNum === 3) disableBtns();
-  //   round.textContent = `Round: ${roundNum}`;
-  // }
+  let counter: number = 1;
 
-  const round = getElementByIdOrThrow<HTMLParagraphElement>("round");
-  let roundNum: number = 1;
+  function displayRoundResults(verdict: Verdict): void {
+    if (counter == 1) { round1.textContent = `Round: 1:${emojiMapping[verdict]}` }
+    if (counter == 2) { round2.textContent = `Round: 2:${emojiMapping[verdict]}` }
+    if (counter == 3) { round3.textContent = `Round: 3:${emojiMapping[verdict]}` }
+    if (counter == 3) {disableBtns()}
+    counter++;
+  }
+
+  function calculateOverallWinner(): void {
+    // thinking of getting textContent from round elements to compare
+    // or get values from return states in displayRoundResults
+  } 
 
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
 
-      roundNum++;
-      console.log(roundNum);
-      if (roundNum === 3) {disableBtns()}
-      round.textContent = `Round: ${roundNum}`;
+
 
       // const btn = ev.currentTarget;
       // assert(btn instanceof HTMLButtonElement, "Event target is not a button!");
@@ -83,7 +85,7 @@ function main() {
 
       const cc = getComputerChoice();
       const verdict = evaluateGame(uc, cc);
-
+      displayRoundResults(verdict);
       // console.log({ uc, cc, verdict });
 
       // TODO: 
@@ -93,7 +95,8 @@ function main() {
       comChoice.textContent = emojiMapping[cc];
       resultElm.textContent = emojiMapping[verdict];
     }
-    )});
-  
+    )
+  });
+
 }
 main();

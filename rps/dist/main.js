@@ -10,12 +10,14 @@ function main() {
     const messageElm = getElementByIdOrThrow("message");
     const resultElm = getElementByIdOrThrow("result");
     const comChoice = getElementByIdOrThrow("com-choice");
+    const round1 = getElementByIdOrThrow("round1");
+    const round2 = getElementByIdOrThrow("round2");
+    const round3 = getElementByIdOrThrow("round3");
     const btns = function () {
         let buttons = [];
         for (const prs of choices) {
             buttons.push(getElementByIdOrThrow(`btn-${prs}`));
         }
-        console.log(buttons);
         return buttons;
     };
     function disableBtns() {
@@ -23,20 +25,31 @@ function main() {
             btn.disabled = true;
         }
     }
-    const round = getElementByIdOrThrow("round");
-    let roundNum = 1;
+    let counter = 1;
+    function displayRoundResults(verdict) {
+        if (counter == 1) {
+            round1.textContent = `Round: 1:${emojiMapping[verdict]}`;
+        }
+        if (counter == 2) {
+            round2.textContent = `Round: 2:${emojiMapping[verdict]}`;
+        }
+        if (counter == 3) {
+            round3.textContent = `Round: 3:${emojiMapping[verdict]}`;
+        }
+        if (counter == 3) {
+            disableBtns();
+        }
+        counter++;
+    }
+    function calculateOverallWinner() {
+    }
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
-            roundNum++;
-            console.log(roundNum);
-            if (roundNum === 3) {
-                disableBtns();
-            }
-            round.textContent = `Round: ${roundNum}`;
             const uc = btn.getAttribute("data-choice");
             assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
             const cc = getComputerChoice();
             const verdict = evaluateGame(uc, cc);
+            displayRoundResults(verdict);
             comChoice.textContent = emojiMapping[cc];
             resultElm.textContent = emojiMapping[verdict];
         });

@@ -18,7 +18,7 @@ const obj = {
   2: "hello",
   disposition,
   name: "meerkaat",
-  [add]: "the key for this value should a string representing the serialized function",
+  // [add]: "the key for this value should a string representing the serialized function",
   [disposition]: true,
 };
 

@@ -60,7 +60,7 @@ export const emojiMapping: Record<PRS | Verdict, string> = {
 };
 
 // I did this because retrun was giving error "Type 'string' is not assignable to type 'EmojiOptions'"
-type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷";
+export type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷";
 
 // type EmojiType = Record<
 //   | "paper"
@@ -98,21 +98,3 @@ const stringToEmoji = {
   lose: "🇱",
   tie: "🤷",
 } satisfies Record<string, EmojiOptions>;
-
-export function choiceToEmoji(text: PRS | Verdict): EmojiOptions {
-  // return {
-  //   paper: stringToEmoji.paper,
-  //   rock: stringToEmoji.rock,
-  //   scissors: stringToEmoji.scissors,
-  //   [Verdict.Computer]: stringToEmoji.lose,
-  //   [Verdict.User]: stringToEmoji.win,
-  //   [Verdict.Tie]: stringToEmoji.tie,
-  // }[text];
-
-  if (text === "paper") return stringToEmoji.paper;
-  if (text === "rock") return stringToEmoji.rock;
-  if (text === "scissors") return stringToEmoji.scissors;
-  if (text === Verdict.Computer) return stringToEmoji.lose;
-  if (text === Verdict.User) return stringToEmoji.win;
-  return stringToEmoji.tie;
-}
