@@ -2,6 +2,7 @@ import {
   choices,
   // choiceToEmoji,
   emojiMapping,
+  EmojiOptions,
   evaluateGame,
   getComputerChoice,
   isValidChoice,
@@ -55,24 +56,39 @@ function main() {
   }
 
   let counter: number = 1;
+  let roundResultsArr: EmojiOptions[] = [];
 
   function displayRoundResults(verdict: Verdict): void {
-    if (counter == 1) { round1.textContent = `Round: 1:${emojiMapping[verdict]}` }
-    if (counter == 2) { round2.textContent = `Round: 2:${emojiMapping[verdict]}` }
-    if (counter == 3) { round3.textContent = `Round: 3:${emojiMapping[verdict]}` }
+    if (counter == 1) { 
+      // changed `emojiMapping: Record<PRS | Verdict, string>`
+      // to `emojiMapping: Record<PRS | Verdict, EmojiOptions>`
+      let result = emojiMapping[verdict];
+      round1.textContent = `Round: 1:${result}`;
+      roundResultsArr.push(result);
+    }
+    if (counter == 2) { 
+      let result = emojiMapping[verdict];
+      round2.textContent = `Round: 2:${result}`;
+      roundResultsArr.push(result);
+    }
+    if (counter == 3) { 
+      let result = emojiMapping[verdict];
+      round3.textContent = `Round: 3:${result}`;
+      roundResultsArr.push(result);
+    }
     if (counter == 3) {disableBtns()}
     counter++;
+    console.log(roundResultsArr);
   }
 
   function calculateOverallWinner(): void {
     // thinking of getting textContent from round elements to compare
     // or get values from return states in displayRoundResults
+
   } 
 
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
-
-
 
       // const btn = ev.currentTarget;
       // assert(btn instanceof HTMLButtonElement, "Event target is not a button!");

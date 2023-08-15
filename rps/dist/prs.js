@@ -41,11 +41,3 @@ export const emojiMapping = {
     [Verdict.Computer]: "🇱",
     [Verdict.Tie]: "🤷",
 };
-const stringToEmoji = {
-    paper: "📜",
-    rock: "🪨",
-    scissors: "⚔️",
-    win: "🇼",
-    lose: "🇱",
-    tie: "🤷",
-};

@@ -26,20 +26,28 @@ function main() {
         }
     }
     let counter = 1;
+    let roundResultsArr = [];
     function displayRoundResults(verdict) {
         if (counter == 1) {
-            round1.textContent = `Round: 1:${emojiMapping[verdict]}`;
+            let result = emojiMapping[verdict];
+            round1.textContent = `Round: 1:${result}`;
+            roundResultsArr.push(result);
         }
         if (counter == 2) {
-            round2.textContent = `Round: 2:${emojiMapping[verdict]}`;
+            let result = emojiMapping[verdict];
+            round2.textContent = `Round: 2:${result}`;
+            roundResultsArr.push(result);
         }
         if (counter == 3) {
-            round3.textContent = `Round: 3:${emojiMapping[verdict]}`;
+            let result = emojiMapping[verdict];
+            round3.textContent = `Round: 3:${result}`;
+            roundResultsArr.push(result);
         }
         if (counter == 3) {
             disableBtns();
         }
         counter++;
+        console.log(roundResultsArr);
     }
     function calculateOverallWinner() {
     }

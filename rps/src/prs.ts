@@ -50,7 +50,9 @@ export function evaluateGame(uc: PRS, cc: PRS): Verdict {
   return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
 
-export const emojiMapping: Record<PRS | Verdict, string> = {
+export type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷";
+
+export const emojiMapping: Record<PRS | Verdict, EmojiOptions> = {
   paper: "📜",
   rock: "🪨",
   scissors: "⚔️",
@@ -60,7 +62,6 @@ export const emojiMapping: Record<PRS | Verdict, string> = {
 };
 
 // I did this because retrun was giving error "Type 'string' is not assignable to type 'EmojiOptions'"
-export type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷";
 
 // type EmojiType = Record<
 //   | "paper"
@@ -90,11 +91,11 @@ export type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷"
 //   tie: "🤷",
 // };
 
-const stringToEmoji = {
-  paper: "📜",
-  rock: "🪨",
-  scissors: "⚔️",
-  win: "🇼",
-  lose: "🇱",
-  tie: "🤷",
-} satisfies Record<string, EmojiOptions>;
+// const stringToEmoji = {
+//   paper: "📜",
+//   rock: "🪨",
+//   scissors: "⚔️",
+//   win: "🇼",
+//   lose: "🇱",
+//   tie: "🤷",
+// } satisfies Record<string, EmojiOptions>;

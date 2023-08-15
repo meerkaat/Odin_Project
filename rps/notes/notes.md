@@ -16,6 +16,7 @@ What happens when win?
   - [ ] best of three
   - [ ] no tie on tie-breaker 
       - computer doesn't choose user choice 
+- [ ] add reset button
 - [x] win/lose selector
 - [ ] layout
 - [ ] round/background selector
