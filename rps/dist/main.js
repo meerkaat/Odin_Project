@@ -13,6 +13,7 @@ function main() {
     const round1 = getElementByIdOrThrow("round1");
     const round2 = getElementByIdOrThrow("round2");
     const round3 = getElementByIdOrThrow("round3");
+    const match = getElementByIdOrThrow("match-result");
     const btns = function () {
         let buttons = [];
         for (const prs of choices) {
@@ -49,7 +50,14 @@ function main() {
         counter++;
         console.log(roundResultsArr);
     }
-    function calculateOverallWinner() {
+    function evaluateOverallWinner() {
+        assert(roundResultsArr[0], "Array does not exist");
+        if (roundResultsArr.length >= 2) {
+            if (roundResultsArr[0] === roundResultsArr[1]) {
+                match.textContent = roundResultsArr[0];
+                disableBtns();
+            }
+        }
     }
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
@@ -58,6 +66,7 @@ function main() {
             const cc = getComputerChoice();
             const verdict = evaluateGame(uc, cc);
             displayRoundResults(verdict);
+            evaluateOverallWinner();
             comChoice.textContent = emojiMapping[cc];
             resultElm.textContent = emojiMapping[verdict];
         });

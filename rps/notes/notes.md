@@ -51,7 +51,19 @@ function getKeyByValue(object, value) {
     const map = {"first" : "1", "second" : "2"};
     console.log(getKeyByValue(map,"2"));
 ```
-
+```js
+function hasDuplicates(array) {
+    var valuesSoFar = Object.create(null);
+    for (var i = 0; i < array.length; ++i) {
+        var value = array[i];
+        if (value in valuesSoFar) {
+            return true;
+        }
+        valuesSoFar[value] = true;
+    }
+    return false;
+}
+```
 
 ## Emoji
 

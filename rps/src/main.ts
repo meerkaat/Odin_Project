@@ -30,6 +30,7 @@ function main() {
   const round2 = getElementByIdOrThrow<HTMLParagraphElement>("round2");
   const round3 = getElementByIdOrThrow<HTMLParagraphElement>("round3");
 
+  const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
 
   // const paperBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-paper");
   // const rockBtn = getElementByIdOrThrow<HTMLButtonElement>("btn-rock");
@@ -81,10 +82,19 @@ function main() {
     console.log(roundResultsArr);
   }
 
-  function calculateOverallWinner(): void {
+  function evaluateOverallWinner(): void {
     // thinking of getting textContent from round elements to compare
     // or get values from return states in displayRoundResults
-
+    assert(
+      roundResultsArr[0],
+      "Array does not exist"
+      );
+    if (roundResultsArr.length >= 2) {
+      if (roundResultsArr[0] === roundResultsArr[1]) {
+        match.textContent = roundResultsArr[0];
+        disableBtns();
+      } 
+    }
   } 
 
   btns().forEach((btn) => {
@@ -102,6 +112,7 @@ function main() {
       const cc = getComputerChoice();
       const verdict = evaluateGame(uc, cc);
       displayRoundResults(verdict);
+      evaluateOverallWinner()
       // console.log({ uc, cc, verdict });
 
       // TODO: 
