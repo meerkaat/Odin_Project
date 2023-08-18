@@ -60,42 +60,94 @@ function main() {
   let roundResultsArr: EmojiOptions[] = [];
 
   function displayRoundResults(verdict: Verdict): void {
-    if (counter == 1) { 
-      // changed `emojiMapping: Record<PRS | Verdict, string>`
-      // to `emojiMapping: Record<PRS | Verdict, EmojiOptions>`
+    const elements: Record<number, HTMLElement> = {
+      1: round1,
+      2: round2,
+      3: round3,
+    };
+
+    if (counter in elements) { // if "counter" is a key in the "elements" object...
+      const element = elements[counter]!;
       let result = emojiMapping[verdict];
-      round1.textContent = `Round: 1:${result}`;
+      element.textContent = `Round ${counter}:${result}`;
       roundResultsArr.push(result);
+      if (counter === 3) disableBtns();
     }
-    if (counter == 2) { 
-      let result = emojiMapping[verdict];
-      round2.textContent = `Round: 2:${result}`;
-      roundResultsArr.push(result);
-    }
-    if (counter == 3) { 
-      let result = emojiMapping[verdict];
-      round3.textContent = `Round: 3:${result}`;
-      roundResultsArr.push(result);
-    }
-    if (counter == 3) {disableBtns()}
     counter++;
-    console.log(roundResultsArr);
+
+    // for (
+    //   const [number, element] of [
+    //     [1, round1],
+    //     [2, round2],
+    //     [3, round3],
+    //   ] as const
+    // ) {
+    //   if (counter === number) {
+    //     let result = emojiMapping[verdict];
+    //     // ⚠️ Danger!!
+    //     // eval(`round${number}`).textContent = `Round ${number}:${result}`;
+    //     element.textContent = `Round ${number}:${result}`;
+    //     roundResultsArr.push(result);
+    // }
   }
+
+  // function displayRoundResults(verdict: Verdict): void {
+  //   // TODO: Refactor to loop?
+  //   if (counter === 1) {
+  //     // changed `emojiMapping: Record<PRS | Verdict, string>`
+  //     // to `emojiMapping: Record<PRS | Verdict, EmojiOptions>`
+  //     let result = emojiMapping[verdict];
+  //     round1.textContent = `Round: 1:${result}`;
+  //     roundResultsArr.push(result);
+  //   }
+  //   else if (counter === 2) {
+  //     let result = emojiMapping[verdict];
+  //     round2.textContent = `Round: 2:${result}`;
+  //     roundResultsArr.push(result);
+  //   }
+  //   else if (counter === 3) {
+  //     let result = emojiMapping[verdict];
+  //     round3.textContent = `Round: 3:${result}`;
+  //     roundResultsArr.push(result);
+  //     disableBtns();
+  //   }
+  //   counter++;
+  // }
 
   function evaluateOverallWinner(): void {
     // thinking of getting textContent from round elements to compare
     // or get values from return states in displayRoundResults
-    assert(
-      roundResultsArr[0],
-      "Array does not exist"
-      );
-    if (roundResultsArr.length >= 2) {
-      if (roundResultsArr[0] === roundResultsArr[1]) {
-        match.textContent = roundResultsArr[0];
-        disableBtns();
-      } 
+
+    // for (let i = 0; i < roundResultsArr.length; i++) {
+    //   let value = roundResultsArr[i];
+    //   assert(value, "Array does not exist");
+
+    //   if (roundResultsArr.includes(value)) {
+    //     match.textContent = value;
+    //     disableBtns();
+    //   }
+    // }
+
+    // if (roundResultsArr.length > new Set(roundResultsArr).size) {}
+
+    const counts = new Map<EmojiOptions, number>();
+
+    for (const value of roundResultsArr) {
+      // let existingCount = counts.get(value);
+      // if (existingCount === undefined) existingCount = 0;
+      // const newCount = existingCount + 1;
+      // counts.set(value, newCount);
+      counts.set(value, (counts.get(value) ?? 0) + 1);
     }
-  } 
+
+    for (const [emoji, count] of counts.entries()) {
+      if (count > 1) {
+        match.textContent = emoji;
+        disableBtns();
+        break;
+      }
+    }
+  }
 
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
@@ -112,7 +164,7 @@ function main() {
       const cc = getComputerChoice();
       const verdict = evaluateGame(uc, cc);
       displayRoundResults(verdict);
-      evaluateOverallWinner()
+      evaluateOverallWinner();
       // console.log({ uc, cc, verdict });
 
       // TODO: 

@@ -29,33 +29,31 @@ function main() {
     let counter = 1;
     let roundResultsArr = [];
     function displayRoundResults(verdict) {
-        if (counter == 1) {
+        const elements = {
+            1: round1,
+            2: round2,
+            3: round3,
+        };
+        if (counter in elements) {
+            const element = elements[counter];
             let result = emojiMapping[verdict];
-            round1.textContent = `Round: 1:${result}`;
+            element.textContent = `Round ${counter}:${result}`;
             roundResultsArr.push(result);
-        }
-        if (counter == 2) {
-            let result = emojiMapping[verdict];
-            round2.textContent = `Round: 2:${result}`;
-            roundResultsArr.push(result);
-        }
-        if (counter == 3) {
-            let result = emojiMapping[verdict];
-            round3.textContent = `Round: 3:${result}`;
-            roundResultsArr.push(result);
-        }
-        if (counter == 3) {
-            disableBtns();
+            if (counter === 3)
+                disableBtns();
         }
         counter++;
-        console.log(roundResultsArr);
     }
     function evaluateOverallWinner() {
-        assert(roundResultsArr[0], "Array does not exist");
-        if (roundResultsArr.length >= 2) {
-            if (roundResultsArr[0] === roundResultsArr[1]) {
-                match.textContent = roundResultsArr[0];
+        const counts = new Map();
+        for (const value of roundResultsArr) {
+            counts.set(value, (counts.get(value) ?? 0) + 1);
+        }
+        for (const [emoji, count] of counts.entries()) {
+            if (count > 1) {
+                match.textContent = emoji;
                 disableBtns();
+                break;
             }
         }
     }
