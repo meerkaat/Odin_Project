@@ -12,12 +12,13 @@ What happens when win?
 
 ## To-do
 - [x] create round counter
-  - [ ] refactor rounds counter; create function
-  - [ ] best of three
+  - [x] refactor rounds counter; create function
+  - [x] best of three
   - [ ] no tie on tie-breaker 
       - computer doesn't choose user choice 
 - [ ] add reset button
 - [x] win/lose selector
+
 - [ ] layout
 - [ ] round/background selector
 - [ ] emoji state

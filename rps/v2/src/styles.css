@@ -1,0 +1,20 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+html {
+  background-color: rgba(251, 228, 53, 0.555);
+}
+
+body {
+  padding: 1rem;
+  font-size: .8rem;
+}

@@ -114,7 +114,7 @@ function main() {
   //   counter++;
   // }
 
-  function evaluateOverallWinner(): void {
+  function evaluateOverallWinner() {
     // thinking of getting textContent from round elements to compare
     // or get values from return states in displayRoundResults
 
