@@ -6,6 +6,8 @@ function getElementByIdOrThrow(selector, msg = "Element not found") {
         throw new Error(msg);
     return element;
 }
+export let counter = 1;
+let roundResultsArr = [];
 function main() {
     const messageElm = getElementByIdOrThrow("message");
     const resultElm = getElementByIdOrThrow("result");
@@ -26,8 +28,6 @@ function main() {
             btn.disabled = true;
         }
     }
-    let counter = 1;
-    let roundResultsArr = [];
     function displayRoundResults(verdict) {
         const elements = {
             1: round1,
@@ -60,8 +60,17 @@ function main() {
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
             const uc = btn.getAttribute("data-choice");
+            let cc = getComputerChoice();
             assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
-            const cc = getComputerChoice();
+            function controlDestiny() {
+                if (cc === uc) {
+                    getComputerChoice();
+                    controlDestiny();
+                }
+                return cc;
+            }
+            if (counter === 3)
+                controlDestiny();
             const verdict = evaluateGame(uc, cc);
             displayRoundResults(verdict);
             evaluateOverallWinner();

@@ -9,15 +9,12 @@ export function isValidChoice(input) {
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
-export const getComputerChoice = () => getRandomElement(choices);
+export const getComputerChoice = () => {
+    return getRandomElement(choices);
+};
 function isValidIndex(num) {
     return num === 0 || num === 1 || num === 2;
 }
-export const getUserChoice = (num) => {
-    if (!isValidIndex(num))
-        throw new Error("Expected int 0, 1, 2");
-    return choices[num];
-};
 export const Verdict = {
     Computer: "Computer",
     Tie: "Tie",
