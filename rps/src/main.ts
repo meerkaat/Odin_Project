@@ -5,11 +5,15 @@ import {
   EmojiOptions,
   evaluateGame,
   getComputerChoice,
+  getRandomElement,
   isValidChoice,
+  PRS,
   Verdict,
 } from "./prs.js";
 
 import { assert } from "./assert.js";
+
+//*------------------------------------------------------------------------------------------------*/
 
 function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
   selector: string,
@@ -20,8 +24,7 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
   return element as T;
 }
 
-export let counter: number = 1;
-let roundResultsArr: EmojiOptions[] = [];
+//*------------------------------------------------------------------------------------------------*/
 
 function main() {
   const messageElm = getElementByIdOrThrow<HTMLDivElement>("message");
@@ -51,6 +54,9 @@ function main() {
   }
 
   //*------------------------------------------------------------------------------------------------*/
+
+  let counter: number = 1;
+  let roundResultsArr: EmojiOptions[] = [];
 
   function displayRoundResults(verdict: Verdict) {
     const elements: Record<number, HTMLElement> = {
@@ -82,8 +88,6 @@ function main() {
         disableBtns();
         break;
       }
-      // if countfor all is 1
-      // then getComputerChoice() should not choice what the user chose.
     }
   }
 
@@ -99,23 +103,13 @@ function main() {
         "Not a valid choice",
       );
 
-      function controlDestiny() {
-        if (cc === uc) {
-          getComputerChoice();
-          controlDestiny();
-        } 
-        return cc;
-      }
+      const verdict = evaluateGame(uc, cc);
+      displayRoundResults(verdict);
+      evaluateOverallWinner();
 
-    if (counter === 3) controlDestiny();
-  
-    const verdict = evaluateGame(uc, cc);
-    displayRoundResults(verdict);
-    evaluateOverallWinner();
-
-    comChoice.textContent = emojiMapping[cc];
-    resultElm.textContent = emojiMapping[verdict];
+      comChoice.textContent = emojiMapping[cc];
+      resultElm.textContent = emojiMapping[verdict];
+    });
   });
-});
 }
 main();

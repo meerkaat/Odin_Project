@@ -6,7 +6,7 @@ export const choices = [
 export function isValidChoice(input) {
     return choices.includes(input);
 }
-function getRandomElement(array) {
+export function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 export const getComputerChoice = () => {

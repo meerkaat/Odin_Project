@@ -10,7 +10,7 @@ export function isValidChoice(input: string): input is PRS {
   return choices.includes(input as PRS);
 }
 
-function getRandomElement<T>(array: readonly T[]): T {
+export function getRandomElement<T>(array: readonly T[]): T {
   return array[Math.floor(Math.random() * array.length)]!;
 }
 
