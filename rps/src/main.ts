@@ -35,6 +35,10 @@ function main() {
   const round2 = getElementByIdOrThrow<HTMLParagraphElement>("round2");
   const round3 = getElementByIdOrThrow<HTMLParagraphElement>("round3");
 
+  const tieBreaker = document.createElement("p");
+  tieBreaker.id = "tie-breaker";
+  tieBreaker.textContent = `Tie Breaker: `;
+
   const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
 
   const btns = function (): HTMLButtonElement[] {
@@ -58,19 +62,27 @@ function main() {
   let counter: number = 1;
   let roundResultsArr: EmojiOptions[] = [];
 
-  function displayRoundResults(verdict: Verdict) {
+  function displayRoundResults(verdict: Verdict, uc: PRS, cc: PRS) {
     const elements: Record<number, HTMLElement> = {
       1: round1,
       2: round2,
       3: round3,
+      4: tieBreaker,
     };
 
     if (counter in elements) { // if "counter" is a key in the "elements" object...
       const element = elements[counter]!;
       let result = emojiMapping[verdict];
-      element.textContent = `Round ${counter}:${result}`;
-      roundResultsArr.push(result);
-      if (counter === 3) disableBtns();
+      if (counter <= 3) {
+        element.textContent = `Round ${counter} : ${result}`;
+        roundResultsArr.push(result);
+      } else {
+        // create set. if all values are unique create tie breaker element. 
+        tieBreaker.textContent = `Tie Breaker! ${result}`;
+        roundResultsArr.push(result);
+        round3.after(tieBreaker)
+      }
+
     }
     counter++;
   }
@@ -83,6 +95,7 @@ function main() {
     }
 
     for (const [emoji, count] of counts.entries()) {
+      // count does not need to diable buttons if verdict is tie.
       if (count > 1) {
         match.textContent = emoji;
         disableBtns();
@@ -90,6 +103,7 @@ function main() {
       }
     }
   }
+
 
   //*------------------------------------------------------------------------------------------------*/
 
@@ -104,7 +118,7 @@ function main() {
       );
 
       const verdict = evaluateGame(uc, cc);
-      displayRoundResults(verdict);
+      displayRoundResults(verdict, uc, cc);
       evaluateOverallWinner();
 
       comChoice.textContent = emojiMapping[cc];

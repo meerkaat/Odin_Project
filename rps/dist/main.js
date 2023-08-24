@@ -13,6 +13,9 @@ function main() {
     const round1 = getElementByIdOrThrow("round1");
     const round2 = getElementByIdOrThrow("round2");
     const round3 = getElementByIdOrThrow("round3");
+    const tieBreaker = document.createElement("p");
+    tieBreaker.id = "tie-breaker";
+    tieBreaker.textContent = `Tie Breaker: `;
     const match = getElementByIdOrThrow("match-result");
     const btns = function () {
         let buttons = [];
@@ -28,19 +31,25 @@ function main() {
     }
     let counter = 1;
     let roundResultsArr = [];
-    function displayRoundResults(verdict) {
+    function displayRoundResults(verdict, uc, cc) {
         const elements = {
             1: round1,
             2: round2,
             3: round3,
+            4: tieBreaker,
         };
         if (counter in elements) {
             const element = elements[counter];
             let result = emojiMapping[verdict];
-            element.textContent = `Round ${counter}:${result}`;
-            roundResultsArr.push(result);
-            if (counter === 3)
-                disableBtns();
+            if (counter <= 3) {
+                element.textContent = `Round ${counter} : ${result}`;
+                roundResultsArr.push(result);
+            }
+            else {
+                tieBreaker.textContent = `Tie Breaker! ${result}`;
+                roundResultsArr.push(result);
+                round3.after(tieBreaker);
+            }
         }
         counter++;
     }
@@ -63,7 +72,7 @@ function main() {
             let cc = getComputerChoice();
             assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
             const verdict = evaluateGame(uc, cc);
-            displayRoundResults(verdict);
+            displayRoundResults(verdict, uc, cc);
             evaluateOverallWinner();
             comChoice.textContent = emojiMapping[cc];
             resultElm.textContent = emojiMapping[verdict];
