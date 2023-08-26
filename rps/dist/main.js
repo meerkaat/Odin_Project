@@ -1,4 +1,4 @@
-import { choices, emojiMapping, evaluateGame, getComputerChoice, isValidChoice, } from "./prs.js";
+import { choices, emojiMapping, evaluateGame, getComputerChoice, getRandomElement, isValidChoice, Verdict, } from "./prs.js";
 import { assert } from "./assert.js";
 function getElementByIdOrThrow(selector, msg = "Element not found") {
     const element = document.getElementById(selector);
@@ -13,9 +13,7 @@ function main() {
     const round1 = getElementByIdOrThrow("round1");
     const round2 = getElementByIdOrThrow("round2");
     const round3 = getElementByIdOrThrow("round3");
-    const tieBreaker = document.createElement("p");
-    tieBreaker.id = "tie-breaker";
-    tieBreaker.textContent = `Tie Breaker: `;
+    const tieBreaker = getElementByIdOrThrow("tie-breaker");
     const match = getElementByIdOrThrow("match-result");
     const btns = function () {
         let buttons = [];
@@ -46,9 +44,8 @@ function main() {
                 roundResultsArr.push(result);
             }
             else {
-                tieBreaker.textContent = `Tie Breaker! ${result}`;
+                tieBreaker.textContent = `Tie Breaker: ${result}`;
                 roundResultsArr.push(result);
-                round3.after(tieBreaker);
             }
         }
         counter++;
@@ -57,6 +54,7 @@ function main() {
         const counts = new Map();
         for (const value of roundResultsArr) {
             counts.set(value, (counts.get(value) ?? 0) + 1);
+            counts.delete(emojiMapping.Tie);
         }
         for (const [emoji, count] of counts.entries()) {
             if (count > 1) {
@@ -66,17 +64,30 @@ function main() {
             }
         }
     }
-    btns().forEach((btn) => {
-        btn.addEventListener("click", (ev) => {
-            const uc = btn.getAttribute("data-choice");
-            let cc = getComputerChoice();
-            assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
-            const verdict = evaluateGame(uc, cc);
-            displayRoundResults(verdict, uc, cc);
-            evaluateOverallWinner();
-            comChoice.textContent = emojiMapping[cc];
-            resultElm.textContent = emojiMapping[verdict];
-        });
-    });
+    function forceNoTie(cc) {
+        let tempChoices = choices.filter((value) => value !== cc);
+        let newCC = getRandomElement(tempChoices);
+        return newCC;
+    }
+    let tieArr = [];
+    for (let i = 0; i < 20; i++) {
+        console.log("Second", tieArr);
+        const uc = getComputerChoice();
+        let cc = getComputerChoice();
+        assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
+        let verdict = evaluateGame(uc, cc);
+        if (verdict === Verdict.Tie) {
+            tieArr.push(verdict);
+            if (tieArr.length > 1) {
+                cc = forceNoTie(cc);
+                verdict = evaluateGame(uc, cc);
+            }
+        }
+        displayRoundResults(verdict, uc, cc);
+        evaluateOverallWinner();
+        console.log({ verdict, uc, cc });
+        comChoice.textContent = emojiMapping[cc];
+        resultElm.textContent = emojiMapping[verdict];
+    }
 }
 main();

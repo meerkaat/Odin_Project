@@ -15,6 +15,7 @@ What happens when win?
   - [x] refactor rounds counter; create function
   - [x] best of three
   - [ ] no tie on tie-breaker 
+      - [ ] ISSUE: two ties are not creating tie breaker
       - computer doesn't choose user choice 
 - [ ] add reset button
 - [x] win/lose selector
