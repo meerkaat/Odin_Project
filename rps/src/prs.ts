@@ -27,13 +27,6 @@ function isValidIndex(num: number): num is ValidIndex {
   return num === 0 || num === 1 || num === 2;
 }
 
-// export const getUserChoice = (num: number): PRS => {
-//   // if (num !== 0 && num !== 1 && num !== 2) {
-//   // if (!(num === 0 || num === 1 || num === 2)) {
-//   if (!isValidIndex(num)) throw new Error("Expected int 0, 1, 2");
-//   return choices[num];
-// };
-
 export const Verdict = {
   Computer: "Computer",
   Tie: "Tie",

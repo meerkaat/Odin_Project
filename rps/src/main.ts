@@ -27,7 +27,6 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
 //*------------------------------------------------------------------------------------------------*/
 
 function main() {
-  const messageElm = getElementByIdOrThrow<HTMLDivElement>("message");
   const resultElm = getElementByIdOrThrow<HTMLDivElement>("result");
   const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 
@@ -38,6 +37,9 @@ function main() {
   const tieBreaker = getElementByIdOrThrow<HTMLParagraphElement>("tie-breaker");
 
   const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
+
+  const resetbtn = getElementByIdOrThrow<HTMLButtonElement>("reset");
+  resetbtn.disabled = true;
 
   const btns = function (): HTMLButtonElement[] {
     let buttons: HTMLButtonElement[] = [];
@@ -72,13 +74,11 @@ function main() {
       const element = elements[counter]!;
       let result = emojiMapping[verdict];
       if (counter <= 3) {
-        element.textContent = `Round ${counter} : ${result}`;
+        element.textContent = `Round ${counter}: ${result}`;
         roundResultsArr.push(result);
       } else {
-        // create set. if all values are unique create tie breaker element. 
         tieBreaker.textContent = `Tie Breaker: ${result}`;
         roundResultsArr.push(result);
-        // round3.after(tieBreaker)
       }
 
     }
@@ -96,8 +96,9 @@ function main() {
     for (const [emoji, count] of counts.entries()) {
       // count does not need to diable buttons if verdict is tie.
       if (count > 1) {
-        match.textContent = emoji;
+        match.textContent = `Match: ${emoji}`;
         disableBtns();
+        resetbtn.disabled = false;
         break;
       }
     }
@@ -105,69 +106,46 @@ function main() {
 
   function forceNoTie(cc: PRS): PRS {
     let tempChoices = choices.filter((value) => value !== cc);
-    // console.log(tempChoices)
     let newCC = getRandomElement(tempChoices);
     return newCC;
   }
 
-  // function generateVerdict(uc: PRS, cc: PRS): PRS {
-  //   const verdict = evaluateGame(uc, cc);
-  //   let tieArr = [];
-  //   let newCC;
-
-  //   if (verdict === Verdict.Tie) {
-  //     tieArr.push(verdict);
-  //     if (tieArr.length === 1) {
-  //       newCC = forceNoTie(cc);
-  //     }
-  //   }
-
-  //   assert(typeof newCC === "string" && isValidChoice(newCC),
-  //     "Not a valid choice");
-
-  //   return newCC;
-  // }
-
   //*------------------------------------------------------------------------------------------------*/
   let tieArr: Verdict[] = [];
-  
-  for (let i = 0; i < 20; i++) {
-    // btns().forEach((btn) => {
-    // btn.addEventListener("click", (ev) => {
-    console.log("Second", tieArr);
-    const uc = getComputerChoice();
-    let cc = getComputerChoice();
-    // let cc = "paper" as PRS;
-    assert(
-      typeof uc === "string" && isValidChoice(uc),
-      "Not a valid choice",
-    );
 
-    // let randomRound = Math.floor(Math.random() * 3 + 1);
+  btns().forEach((btn) => {
+    btn.addEventListener("click", (ev) => {
+      console.log("Second", tieArr);
+      const uc = getComputerChoice();
+      let cc = getComputerChoice();
 
-    // if (counter === randomRound) cc = forceNoTie(cc);
-    // if (counter === 4 && uc === cc) cc = forceNoTie(cc);
+      assert(
+        typeof uc === "string" && isValidChoice(uc),
+        "Not a valid choice",
+      );
 
-    let verdict = evaluateGame(uc, cc);
+      let verdict = evaluateGame(uc, cc);
 
-    if (verdict === Verdict.Tie) {
-      tieArr.push(verdict);
+      if (verdict === Verdict.Tie) {
+        tieArr.push(verdict);
 
-      if (tieArr.length > 1) {
-        cc = forceNoTie(cc);
-        verdict = evaluateGame(uc, cc);
+        if (tieArr.length > 1) {
+          cc = forceNoTie(cc);
+          verdict = evaluateGame(uc, cc);
+        }
       }
-    }
 
+      displayRoundResults(verdict, uc, cc);
+      evaluateOverallWinner();
 
-    displayRoundResults(verdict, uc, cc);
-    evaluateOverallWinner();
-    console.log({ verdict, uc, cc });
+      comChoice.textContent = emojiMapping[cc];
+      resultElm.textContent = `User: ${emojiMapping[verdict]}`;
+    });
+  });
 
-    comChoice.textContent = emojiMapping[cc];
-    resultElm.textContent = emojiMapping[verdict];
-    // });
-    // });
-  }
+  resetbtn.addEventListener("click", (btn) => {
+    location.reload();
+  })
+
 }
 main();

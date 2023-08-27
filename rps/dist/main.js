@@ -7,7 +7,6 @@ function getElementByIdOrThrow(selector, msg = "Element not found") {
     return element;
 }
 function main() {
-    const messageElm = getElementByIdOrThrow("message");
     const resultElm = getElementByIdOrThrow("result");
     const comChoice = getElementByIdOrThrow("com-choice");
     const round1 = getElementByIdOrThrow("round1");
@@ -15,6 +14,8 @@ function main() {
     const round3 = getElementByIdOrThrow("round3");
     const tieBreaker = getElementByIdOrThrow("tie-breaker");
     const match = getElementByIdOrThrow("match-result");
+    const resetbtn = getElementByIdOrThrow("reset");
+    resetbtn.disabled = true;
     const btns = function () {
         let buttons = [];
         for (const prs of choices) {
@@ -40,7 +41,7 @@ function main() {
             const element = elements[counter];
             let result = emojiMapping[verdict];
             if (counter <= 3) {
-                element.textContent = `Round ${counter} : ${result}`;
+                element.textContent = `Round ${counter}: ${result}`;
                 roundResultsArr.push(result);
             }
             else {
@@ -58,8 +59,9 @@ function main() {
         }
         for (const [emoji, count] of counts.entries()) {
             if (count > 1) {
-                match.textContent = emoji;
+                match.textContent = `Match: ${emoji}`;
                 disableBtns();
+                resetbtn.disabled = false;
                 break;
             }
         }
@@ -70,24 +72,28 @@ function main() {
         return newCC;
     }
     let tieArr = [];
-    for (let i = 0; i < 20; i++) {
-        console.log("Second", tieArr);
-        const uc = getComputerChoice();
-        let cc = getComputerChoice();
-        assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
-        let verdict = evaluateGame(uc, cc);
-        if (verdict === Verdict.Tie) {
-            tieArr.push(verdict);
-            if (tieArr.length > 1) {
-                cc = forceNoTie(cc);
-                verdict = evaluateGame(uc, cc);
+    btns().forEach((btn) => {
+        btn.addEventListener("click", (ev) => {
+            console.log("Second", tieArr);
+            const uc = getComputerChoice();
+            let cc = getComputerChoice();
+            assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
+            let verdict = evaluateGame(uc, cc);
+            if (verdict === Verdict.Tie) {
+                tieArr.push(verdict);
+                if (tieArr.length > 1) {
+                    cc = forceNoTie(cc);
+                    verdict = evaluateGame(uc, cc);
+                }
             }
-        }
-        displayRoundResults(verdict, uc, cc);
-        evaluateOverallWinner();
-        console.log({ verdict, uc, cc });
-        comChoice.textContent = emojiMapping[cc];
-        resultElm.textContent = emojiMapping[verdict];
-    }
+            displayRoundResults(verdict, uc, cc);
+            evaluateOverallWinner();
+            comChoice.textContent = emojiMapping[cc];
+            resultElm.textContent = `User: ${emojiMapping[verdict]}`;
+        });
+    });
+    resetbtn.addEventListener("click", (btn) => {
+        location.reload();
+    });
 }
 main();
