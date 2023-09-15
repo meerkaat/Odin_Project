@@ -54,6 +54,19 @@ function displayRoundResults(verdict) {
     }
     counter++;
 }
+const test = getElementByIdOrThrow("test");
+function cycleEmjois() {
+    let condition = true;
+    while (condition) {
+        for (const item of [
+            emojiMapping.paper,
+            emojiMapping.rock,
+            emojiMapping.scissors,
+        ]) {
+            test.textContent = item;
+        }
+    }
+}
 function evaluateOverallWinner() {
     const counts = new Map();
     for (const value of roundResultsArr) {

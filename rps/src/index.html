@@ -14,23 +14,37 @@
 
 <body>
   <div>
-    <p id="message">Let's play paper rock scissors!</p>
-    <hr>
-    <p id="round1">Round 1:</p>
-    <p id="round2">Round 2:</p>
-    <p id="round3">Round 3:</p>
-    <p id="tie-breaker">Tie Breaker: </p>
-    <hr>
-    <p id="match-result">Match: </p>
-    <hr>
-    <p>Computer: <span id="com-choice">❓</span></p>
-    <hr>
-    <span>User: </span>
-    <button id="btn-paper" data-choice="paper">📜</button>
-    <button id="btn-rock" data-choice="rock">🗿</button>
-    <button id="btn-scissors" data-choice="scissors">⚔️</button>
-    <span style="border-left: 1.5px solid #555555; margin-left: auto; margin-right: 5px;"></span>
-    <button id="reset">Reset</button>
+    <div class="grid-wrapper">
+      <p id="user" class="player">🧙‍♂️</p>
+      <p id="computer" class="player">🤖</p>
+      <!-- <hr> -->
+      <div class="grid-user">
+        <p class="user-rounds" id="test">📜</p>
+        <p class="user-rounds" id="round1">Round 1:</p>
+        <p class="user-rounds" id="round2">Round 2:</p>
+        <p class="user-rounds" id="round3">Round 3:</p>
+        <p class="user-rounds" id="tie-breaker">Tie Breaker: </p>
+      </div>
+      <div class="grid-computer">
+        <p class="computer-rounds" id="round2">Round 2:</p>
+        <p class="computer-rounds" id="round1">Round 1:</p>
+        <p class="computer-rounds" id="round3">Round 3:</p>
+        <p class="computer-rounds" id="tie-breaker">Tie Breaker: </p>
+      </div>
+      <!-- <hr> -->
+      <p id="match-result">Match: </p>
+      <!-- <hr> -->
+      <p>Computer: <span id="com-choice">❓</span></p>
+      <!-- <hr> -->
+      <span>User: </span>
+      <div class="grid-emjois">
+        <button class="btn-emjois" id="btn-paper" data-choice="paper">📜</button>
+        <button class="btn-emjois" id="btn-rock" data-choice="rock">🗿</button>
+        <button class="btn-emjois" id="btn-scissors" data-choice="scissors">⚔️</button>
+        <button class="btn-reset" id="reset">Reset</button>
+      </div>
+      <!-- <span style="border-left: 1.5px solid #555555; margin-left: auto; margin-right: 5px;"></span> -->
+    </div>
   </div>
 
 </body>

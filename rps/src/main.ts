@@ -84,6 +84,11 @@ function displayRoundResults(verdict: Verdict) {
   }
   counter++;
 }
+const test = getElementByIdOrThrow<HTMLParagraphElement>("test");
+
+// function cycleEmjois(): void {
+
+// }
 
 function evaluateOverallWinner() {
   const counts = new Map<EmojiOptions, number>();
@@ -115,7 +120,9 @@ function forceNoTie(cc: PRS): PRS {
 function main() {
 
   let tieArr: Verdict[] = [];
+  
 
+  
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
       console.log("Second", tieArr);

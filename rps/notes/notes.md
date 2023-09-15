@@ -11,19 +11,23 @@ What happens when win?
     - loser - red
 
 ## To-do
-- [x] create round counter
-  - [x] refactor rounds counter; create function
-  - [x] best of three
-  - [ ] no tie on tie-breaker 
-      - [ ] ISSUE: two ties are not creating tie breaker
-      - computer doesn't choose user choice 
-- [ ] add reset button
-- [x] win/lose selector
-
+### UI
 - [ ] layout
 - [ ] round/background selector
 - [ ] emoji state
 - [ ] twemoji?
+
+### TS
+- [x] create round counter
+  - [x] refactor rounds counter; create function
+  - [x] best of three
+  - [x] no tie on tie-breaker 
+      - [x] ISSUE: two ties are not creating tie breaker
+      - computer doesn't choose user choice 
+- [x] add reset button
+- [x] win/lose selector
+
+
 
 ## Questions
 
