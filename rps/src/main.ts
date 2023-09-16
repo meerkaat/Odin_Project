@@ -23,21 +23,20 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
   return element as T;
 }
 
-const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 
+const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 const round1 = getElementByIdOrThrow<HTMLParagraphElement>("round1");
 const round2 = getElementByIdOrThrow<HTMLParagraphElement>("round2");
 const round3 = getElementByIdOrThrow<HTMLParagraphElement>("round3");
-
 const tieBreaker = getElementByIdOrThrow<HTMLParagraphElement>("tie-breaker");
-
 const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
-
 const resetbtn = getElementByIdOrThrow<HTMLButtonElement>("reset");
+
 resetbtn.disabled = true;
 resetbtn.addEventListener("click", () => {
   location.reload();
 })
+
 
 function btns(): HTMLButtonElement[] {
   let buttons: HTMLButtonElement[] = [];
@@ -48,6 +47,7 @@ function btns(): HTMLButtonElement[] {
   }
   return buttons;
 };
+
 
 const btnsArr: HTMLButtonElement[] = btns();
 
@@ -80,15 +80,42 @@ function displayRoundResults(verdict: Verdict) {
       tieBreaker.textContent = `Tie Breaker: ${result}`;
       roundResultsArr.push(result);
     }
-
   }
   counter++;
 }
-const test = getElementByIdOrThrow<HTMLParagraphElement>("test");
 
-// function cycleEmjois(): void {
 
+// why did I need to delete this variable for the DOM to react correctly? 
+// It would not cycle emjois in `round1` if I only deleted the `test div` 
+// in the HTML. 
+// const test = getElementByIdOrThrow<HTMLParagraphElement>("test");
+
+// for (const item of [
+//       emojiMapping.paper,
+//       emojiMapping.rock,
+//       emojiMapping.scissors,
+//     ]) {
+//       test.textContent = item;
+//     }
+
+// function cycleEmjois(condition: boolean): void {
+//   const emjois: EmojiOptions[] = [
+//     emojiMapping.paper,
+//     emojiMapping.rock,
+//     emojiMapping.scissors,
+//   ];
+
+//   let count = 0;
+//   let interval = setInterval(() => {
+
+//     if (!condition) clearInterval(interval);
+//   // How to not use `as string`
+//   // Why does TS yell here but not in the main function? 
+//     round1.textContent = emjois[count];
+//     count = (count + 1) % emjois.length;
+//   }, 500)
 // }
+
 
 function evaluateOverallWinner() {
   const counts = new Map<EmojiOptions, number>();
@@ -109,6 +136,7 @@ function evaluateOverallWinner() {
   }
 }
 
+
 function forceNoTie(cc: PRS): PRS {
   let tempChoices = choices.filter((value) => value !== cc);
   let newCC = getRandomElement(tempChoices);
@@ -119,12 +147,31 @@ function forceNoTie(cc: PRS): PRS {
 
 function main() {
 
-  let tieArr: Verdict[] = [];
+  let condition = true;
+  
+  const emjois = [
+    emojiMapping.paper,
+    emojiMapping.rock,
+    emojiMapping.scissors,
+  ];
+  
+  let count = 0;
+  let interval = setInterval(() => {
+    
+    if (!condition) clearInterval(interval);
+    
+    round1.textContent = `Round 1: ${emjois[count]}`;
+    count = (count + 1) % emjois.length;
+  }, 500)
   
 
-  
+  let tieArr: Verdict[] = [];
+
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
+
+      condition = false;
+
       console.log("Second", tieArr);
       const uc = btn.getAttribute("data-choice");
       let cc = getComputerChoice();

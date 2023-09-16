@@ -13,7 +13,10 @@ What happens when win?
 ## To-do
 ### UI
 - [ ] layout
-- [ ] round/background selector
+- [x] figure out how to cycle emjois
+  - check comments on function
+  - [ ] 
+- [ ] change round border color for win/lose/tie
 - [ ] emoji state
 - [ ] twemoji?
 
@@ -30,7 +33,9 @@ What happens when win?
 
 
 ## Questions
+1) Why did I need to delete this variable for the DOM to react         correctly? It would not cycle emjois in `round1` if I only deleted the    `test div` in the HTML. 
 
+2) See comments on `cycleEmjoji()` for TS shenanigans. 
 
 ## Snippets
 

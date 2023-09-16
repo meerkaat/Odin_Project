@@ -10,9 +10,11 @@ export function isValidChoice(input: string): input is PRS {
   return choices.includes(input as PRS);
 }
 
+
 export function getRandomElement<T>(array: readonly T[]): T {
   return array[Math.floor(Math.random() * array.length)]!;
 }
+
 
 export const getComputerChoice = (): PRS => {
   return getRandomElement(choices);
@@ -26,6 +28,7 @@ type ValidIndex = 0 | 1 | 2;
 function isValidIndex(num: number): num is ValidIndex {
   return num === 0 || num === 1 || num === 2;
 }
+
 
 export const Verdict = {
   Computer: "Computer",
@@ -44,6 +47,7 @@ export function evaluateGame(uc: PRS, cc: PRS): Verdict {
   // Ok, then `uc` has to be `"scissors"`:
   return cc === "rock" ? Verdict.Computer : Verdict.User;
 }
+
 
 export type EmojiOptions = "📜" | "🪨" | "⚔️" | "🇼" | "🇱" | "🤷";
 

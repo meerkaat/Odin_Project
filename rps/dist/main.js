@@ -54,19 +54,6 @@ function displayRoundResults(verdict) {
     }
     counter++;
 }
-const test = getElementByIdOrThrow("test");
-function cycleEmjois() {
-    let condition = true;
-    while (condition) {
-        for (const item of [
-            emojiMapping.paper,
-            emojiMapping.rock,
-            emojiMapping.scissors,
-        ]) {
-            test.textContent = item;
-        }
-    }
-}
 function evaluateOverallWinner() {
     const counts = new Map();
     for (const value of roundResultsArr) {
@@ -88,9 +75,23 @@ function forceNoTie(cc) {
     return newCC;
 }
 function main() {
+    let condition = true;
+    const emjois = [
+        emojiMapping.paper,
+        emojiMapping.rock,
+        emojiMapping.scissors,
+    ];
+    let count = 0;
+    let interval = setInterval(() => {
+        if (!condition)
+            clearInterval(interval);
+        round1.textContent = `Round 1: ${emjois[count]}`;
+        count = (count + 1) % emjois.length;
+    }, 500);
     let tieArr = [];
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
+            condition = false;
             console.log("Second", tieArr);
             const uc = btn.getAttribute("data-choice");
             let cc = getComputerChoice();
