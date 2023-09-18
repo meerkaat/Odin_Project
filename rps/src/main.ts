@@ -75,13 +75,24 @@ function displayRoundResults(verdict: Verdict) {
     let result = emojiMapping[verdict];
     if (counter <= 3) {
       element.textContent = `Round ${counter}: ${result}`;
+      changeOutlineColorViaVerdict(verdict, element);
       roundResultsArr.push(result);
     } else {
       tieBreaker.textContent = `Tie Breaker: ${result}`;
+      changeOutlineColorViaVerdict(verdict, element);
       roundResultsArr.push(result);
     }
   }
   counter++;
+}
+
+
+
+function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): void {
+  verdict === "User"
+    ? element.style.outline = "5px solid green"
+    : element.style.outline = "5px solid red";
+  if (verdict === "Tie") element.style.outline = "5px solid orange";
 }
 
 
@@ -147,29 +158,29 @@ function forceNoTie(cc: PRS): PRS {
 
 function main() {
 
+
   let condition = true;
-  
+
   const emjois = [
     emojiMapping.paper,
     emojiMapping.rock,
     emojiMapping.scissors,
   ];
-  
-  let count = 0;
-  let interval = setInterval(() => {
-    
-    if (!condition) clearInterval(interval);
-    
-    round1.textContent = `Round 1: ${emjois[count]}`;
-    count = (count + 1) % emjois.length;
-  }, 500)
-  
+
+  // let count = 0;
+  // let interval = setInterval(() => {
+
+  //   if (!condition) clearInterval(interval);
+
+  //   round1.textContent = `Round 1: ${emjois[count]}`;
+  //   count = (count + 1) % emjois.length;
+  // }, 500)
+
 
   let tieArr: Verdict[] = [];
 
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
-
       condition = false;
 
       console.log("Second", tieArr);

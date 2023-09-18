@@ -45,14 +45,23 @@ function displayRoundResults(verdict) {
         let result = emojiMapping[verdict];
         if (counter <= 3) {
             element.textContent = `Round ${counter}: ${result}`;
+            changeOutlineColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
         else {
             tieBreaker.textContent = `Tie Breaker: ${result}`;
+            changeOutlineColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
     }
     counter++;
+}
+function changeOutlineColorViaVerdict(verdict, element) {
+    verdict === "User"
+        ? element.style.outline = "5px solid green"
+        : element.style.outline = "5px solid red";
+    if (verdict === "Tie")
+        element.style.outline = "5px solid orange";
 }
 function evaluateOverallWinner() {
     const counts = new Map();
@@ -81,13 +90,6 @@ function main() {
         emojiMapping.rock,
         emojiMapping.scissors,
     ];
-    let count = 0;
-    let interval = setInterval(() => {
-        if (!condition)
-            clearInterval(interval);
-        round1.textContent = `Round 1: ${emjois[count]}`;
-        count = (count + 1) % emjois.length;
-    }, 500);
     let tieArr = [];
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {

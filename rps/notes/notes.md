@@ -37,6 +37,8 @@ What happens when win?
 
 2) See comments on `cycleEmjoji()` for TS shenanigans. 
 
+3) `keyof typeof`
+
 ## Snippets
 
 ```css

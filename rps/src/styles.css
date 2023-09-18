@@ -18,19 +18,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 2.5rem;
 }
 
 html {
   background-color: rgba(251, 228, 53, 0.555);
 }
 
-body {
-  padding: 1rem;
-  font-size: .8rem;
-}
-
 .player {
-  font-size: 5rem;
+  font-size: 13rem;
 }
 
 .grid-wrapper {
@@ -44,13 +40,15 @@ body {
 .grid-computer {
   display: grid;
   align-items: center;
-  gap: .2rem;
+  gap: .7rem;
+  padding: .5rem;
 }
 
 .user-rounds {
-  border: 2px solid green;
+  /* border: 2px solid green; */
   /* grid-row: 2;
   grid-column: 2 */
+
 }
 
 .computer-rounds {
