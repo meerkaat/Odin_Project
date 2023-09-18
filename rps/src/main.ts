@@ -59,10 +59,30 @@ function disableBtns(buttons: HTMLButtonElement[]) {
 
 //*------------------------------------------------------------------------------------------------*/
 
+function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): void {
+  const roundsBox = document.querySelectorAll(".box");
+  
+
+  for (let i = 0; i < roundsBox.length; i++) {
+    verdict === "User"
+      ? roundsBox[i].style = "5px solid green"
+      : roundsBox[i].style.outline = "5px solid red";
+    if (verdict === "Tie") roundsBox[i].style.outline = "5px solid orange";
+  }
+
+  
+    // verdict === "User"
+    //   ? element.style.outline = "5px solid green"
+    //   : element.style.outline = "5px solid red";
+    // if (verdict === "Tie") element.style.outline = "5px solid orange";
+  
+
+}
+
 let counter: number = 1;
 let roundResultsArr: EmojiOptions[] = [];
 
-function displayRoundResults(verdict: Verdict) {
+function displayRoundResults(verdict: Verdict, uc: PRS, cc: PRS) {
   const elements: Record<number, HTMLElement> = {
     1: round1,
     2: round2,
@@ -74,27 +94,17 @@ function displayRoundResults(verdict: Verdict) {
     const element = elements[counter]!;
     let result = emojiMapping[verdict];
     if (counter <= 3) {
-      element.textContent = `Round ${counter}: ${result}`;
+      element.textContent = emojiMapping[uc];
       changeOutlineColorViaVerdict(verdict, element);
       roundResultsArr.push(result);
     } else {
-      tieBreaker.textContent = `Tie Breaker: ${result}`;
+      tieBreaker.textContent = emojiMapping[uc];
       changeOutlineColorViaVerdict(verdict, element);
       roundResultsArr.push(result);
     }
   }
   counter++;
 }
-
-
-
-function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): void {
-  verdict === "User"
-    ? element.style.outline = "5px solid green"
-    : element.style.outline = "5px solid red";
-  if (verdict === "Tie") element.style.outline = "5px solid orange";
-}
-
 
 // why did I need to delete this variable for the DOM to react correctly? 
 // It would not cycle emjois in `round1` if I only deleted the `test div` 
@@ -127,7 +137,6 @@ function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): v
 //   }, 500)
 // }
 
-
 function evaluateOverallWinner() {
   const counts = new Map<EmojiOptions, number>();
 
@@ -147,7 +156,6 @@ function evaluateOverallWinner() {
   }
 }
 
-
 function forceNoTie(cc: PRS): PRS {
   let tempChoices = choices.filter((value) => value !== cc);
   let newCC = getRandomElement(tempChoices);
@@ -157,8 +165,6 @@ function forceNoTie(cc: PRS): PRS {
 //*------------------------------------------------------------------------------------------------*/
 
 function main() {
-
-
   let condition = true;
 
   const emjois = [
@@ -167,7 +173,7 @@ function main() {
     emojiMapping.scissors,
   ];
 
-  // let count = 0;
+  let count = 0;
   // let interval = setInterval(() => {
 
   //   if (!condition) clearInterval(interval);
@@ -203,7 +209,7 @@ function main() {
         }
       }
 
-      displayRoundResults(verdict);
+      displayRoundResults(verdict, uc, cc);
       evaluateOverallWinner();
 
       comChoice.textContent = emojiMapping[cc];

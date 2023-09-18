@@ -31,9 +31,19 @@ function disableBtns(buttons) {
         btn.disabled = true;
     }
 }
+function changeOutlineColorViaVerdict(verdict, element) {
+    const roundsBox = document.querySelectorAll(".box");
+    for (let i = 0; i < roundsBox.length; i++) {
+        verdict === "User"
+            ? roundsBox[i].style = "5px solid green"
+            : roundsBox[i].style.outline = "5px solid red";
+        if (verdict === "Tie")
+            roundsBox[i].style.outline = "5px solid orange";
+    }
+}
 let counter = 1;
 let roundResultsArr = [];
-function displayRoundResults(verdict) {
+function displayRoundResults(verdict, uc, cc) {
     const elements = {
         1: round1,
         2: round2,
@@ -44,24 +54,17 @@ function displayRoundResults(verdict) {
         const element = elements[counter];
         let result = emojiMapping[verdict];
         if (counter <= 3) {
-            element.textContent = `Round ${counter}: ${result}`;
+            element.textContent = emojiMapping[uc];
             changeOutlineColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
         else {
-            tieBreaker.textContent = `Tie Breaker: ${result}`;
+            tieBreaker.textContent = emojiMapping[uc];
             changeOutlineColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
     }
     counter++;
-}
-function changeOutlineColorViaVerdict(verdict, element) {
-    verdict === "User"
-        ? element.style.outline = "5px solid green"
-        : element.style.outline = "5px solid red";
-    if (verdict === "Tie")
-        element.style.outline = "5px solid orange";
 }
 function evaluateOverallWinner() {
     const counts = new Map();
@@ -90,6 +93,7 @@ function main() {
         emojiMapping.rock,
         emojiMapping.scissors,
     ];
+    let count = 0;
     let tieArr = [];
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
@@ -106,7 +110,7 @@ function main() {
                     verdict = evaluateGame(uc, cc);
                 }
             }
-            displayRoundResults(verdict);
+            displayRoundResults(verdict, uc, cc);
             evaluateOverallWinner();
             comChoice.textContent = emojiMapping[cc];
         });
