@@ -32,14 +32,14 @@ function disableBtns(buttons) {
     }
 }
 function changeOutlineColorViaVerdict(verdict, element) {
-    const roundsBox = document.querySelectorAll(".box");
-    for (let i = 0; i < roundsBox.length; i++) {
-        verdict === "User"
-            ? roundsBox[i].style = "5px solid green"
-            : roundsBox[i].style.outline = "5px solid red";
-        if (verdict === "Tie")
-            roundsBox[i].style.outline = "5px solid orange";
-    }
+    let parentRounds = element.parentElement;
+    if (parentRounds === null)
+        throw new Error("Parent element is null");
+    verdict === "User"
+        ? parentRounds.style.backgroundColor = "rgba(0, 117, 6, 0.603)"
+        : parentRounds.style.backgroundColor = "rgba(221, 46, 69, 0.808)";
+    if (verdict === "Tie")
+        parentRounds.style.backgroundColor = "rgba(252, 151, 0, 0.507)";
 }
 let counter = 1;
 let roundResultsArr = [];

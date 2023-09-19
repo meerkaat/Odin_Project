@@ -60,23 +60,14 @@ function disableBtns(buttons: HTMLButtonElement[]) {
 //*------------------------------------------------------------------------------------------------*/
 
 function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): void {
-  const roundsBox = document.querySelectorAll(".box");
-  
+  let parentRounds = element.parentElement;
 
-  for (let i = 0; i < roundsBox.length; i++) {
-    verdict === "User"
-      ? roundsBox[i].style = "5px solid green"
-      : roundsBox[i].style.outline = "5px solid red";
-    if (verdict === "Tie") roundsBox[i].style.outline = "5px solid orange";
-  }
+  if (parentRounds === null) throw new Error("Parent element is null");
 
-  
-    // verdict === "User"
-    //   ? element.style.outline = "5px solid green"
-    //   : element.style.outline = "5px solid red";
-    // if (verdict === "Tie") element.style.outline = "5px solid orange";
-  
-
+  verdict === "User"
+    ? parentRounds.style.backgroundColor = "rgba(0, 117, 6, 0.603)"
+    : parentRounds.style.backgroundColor = "rgba(221, 46, 69, 0.808)";
+  if (verdict === "Tie") parentRounds.style.backgroundColor = "rgba(252, 151, 0, 0.507)";
 }
 
 let counter: number = 1;

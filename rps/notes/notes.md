@@ -1,6 +1,8 @@
-## Focus
+# Focus
 
 One round of rps.
+
+---
 
 ### Implment logic with UI
 
@@ -10,17 +12,34 @@ What happens when win?
     - winner - green
     - loser - red
 
-## To-do
-### UI
-- [ ] layout
-- [x] figure out how to cycle emjois
-  - check comments on function
-  - [ ] 
-- [ ] change round border color for win/lose/tie
-- [ ] emoji state
-- [ ] twemoji?
+---
 
-### TS
+# To-do
+
+## UI
+- [] layout
+  - [x] player emojis
+  - [x] rounds
+  - [] do something with tie games???
+  - [] match point
+  - [] buttons
+
+- [x] change round border color for win/lose/tie
+
+- [] cycle emojis for rounds
+  - [x] figure out how to cycle emjois
+    - check comments on function
+  - [] stop at end of round and move to, and start, on next round
+
+- [] emoji state
+  - [x] display user choice
+  - [] display computer choice
+
+- [] twemoji?
+
+---
+
+## TS
 - [x] create round counter
   - [x] refactor rounds counter; create function
   - [x] best of three
@@ -30,16 +49,18 @@ What happens when win?
 - [x] add reset button
 - [x] win/lose selector
 
+---
 
-
-## Questions
+# Questions
 1) Why did I need to delete this variable for the DOM to react         correctly? It would not cycle emjois in `round1` if I only deleted the    `test div` in the HTML. 
 
 2) See comments on `cycleEmjoji()` for TS shenanigans. 
 
 3) `keyof typeof`
 
-## Snippets
+---
+
+# Snippets
 
 ```css
 html {
@@ -78,7 +99,9 @@ function hasDuplicates(array) {
 }
 ```
 
-## Emoji
+---
+
+# Emoji
 
 - 📜
 - ⚔️
