@@ -98,6 +98,64 @@ function hasDuplicates(array) {
     return false;
 }
 ```
+---
+## Arity
+```ts
+type CycleCallback<T = unknown> = (
+  stop: () => void,
+  value: T,
+  index: number,
+  array: ReadonlyArray<T>,
+) => void;
+
+type CycleOptions = {
+  /** milliseconds */
+  interval: number;
+};
+
+function cycle<const T>(
+  array: ReadonlyArray<T>,
+  callback: CycleCallback<T>,
+  options: CycleOptions,
+): () => void {
+  if (array.length === 0) return () => {};
+
+  let index = 0;
+  const stop = () => clearInterval(id);
+
+  const id = setInterval(() => {
+    index = (index + 1) % array.length;
+    callback(stop, array[index]!, index, array);
+  }, options.interval);
+
+  callback(stop, array[index]!, index, array);
+  return stop;
+}
+
+function main() {
+  console.clear();
+
+  const letters = ["a", "b", "c"] as const;
+  let chosenLetter: typeof letters[number];
+  let done = false;
+
+  setTimeout(() => {
+    chosenLetter = "c"; // Try changing this letter
+    done = true;
+  }, 1e3);
+
+  cycle(
+    letters,
+    (stop, letter) => {
+      console.log(letter);
+      if (done && chosenLetter === letter) stop();
+    },
+    { interval: 100 }, // Change this interval to modify the cycle speed
+  );
+}
+
+main();
+```
 
 ---
 

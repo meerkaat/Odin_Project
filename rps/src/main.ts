@@ -16,7 +16,7 @@ import { assert } from "./assert.js";
 
 function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
   selector: string,
-  msg = "Element not found",
+  msg = `Element '${selector}' not found`,
 ): T {
   const element = document.getElementById(selector);
   if (!element) throw new Error(msg);
@@ -24,12 +24,16 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
 }
 
 
-const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
+// const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 const round1 = getElementByIdOrThrow<HTMLParagraphElement>("round1");
 const round2 = getElementByIdOrThrow<HTMLParagraphElement>("round2");
 const round3 = getElementByIdOrThrow<HTMLParagraphElement>("round3");
 const tieBreaker = getElementByIdOrThrow<HTMLParagraphElement>("tie-breaker");
-const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
+const computerRound1 = getElementByIdOrThrow<HTMLParagraphElement>("computer-round1");
+const computerRound2 = getElementByIdOrThrow<HTMLParagraphElement>("computer-round2");
+const computerRound3 = getElementByIdOrThrow<HTMLParagraphElement>("computer-round3");
+const computerTie = getElementByIdOrThrow<HTMLParagraphElement>("computer-tie");
+// const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
 const resetbtn = getElementByIdOrThrow<HTMLButtonElement>("reset");
 
 resetbtn.disabled = true;
@@ -48,7 +52,6 @@ function btns(): HTMLButtonElement[] {
   return buttons;
 };
 
-
 const btnsArr: HTMLButtonElement[] = btns();
 
 function disableBtns(buttons: HTMLButtonElement[]) {
@@ -59,7 +62,7 @@ function disableBtns(buttons: HTMLButtonElement[]) {
 
 //*------------------------------------------------------------------------------------------------*/
 
-function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): void {
+function changeBackgroundColorViaVerdict(verdict: Verdict, element: HTMLElement): void {
   let parentRounds = element.parentElement;
 
   if (parentRounds === null) throw new Error("Parent element is null");
@@ -70,10 +73,11 @@ function changeOutlineColorViaVerdict(verdict: Verdict, element: HTMLElement): v
   if (verdict === "Tie") parentRounds.style.backgroundColor = "rgba(252, 151, 0, 0.507)";
 }
 
-let counter: number = 1;
+let userCounter: number = 1;
+let computerCounter: number = 1;
 let roundResultsArr: EmojiOptions[] = [];
 
-function displayRoundResults(verdict: Verdict, uc: PRS, cc: PRS) {
+function displayUserRoundResults(verdict: Verdict, uc: PRS): void {
   const elements: Record<number, HTMLElement> = {
     1: round1,
     2: round2,
@@ -81,20 +85,40 @@ function displayRoundResults(verdict: Verdict, uc: PRS, cc: PRS) {
     4: tieBreaker,
   };
 
-  if (counter in elements) { // if "counter" is a key in the "elements" object...
-    const element = elements[counter]!;
+  if (userCounter in elements) { // if "userCounter" is a key in the "elements" object...
+    const element = elements[userCounter]!;
     let result = emojiMapping[verdict];
-    if (counter <= 3) {
+    if (userCounter <= 3) {
       element.textContent = emojiMapping[uc];
-      changeOutlineColorViaVerdict(verdict, element);
+      changeBackgroundColorViaVerdict(verdict, element);
       roundResultsArr.push(result);
     } else {
       tieBreaker.textContent = emojiMapping[uc];
-      changeOutlineColorViaVerdict(verdict, element);
+      changeBackgroundColorViaVerdict(verdict, element);
       roundResultsArr.push(result);
     }
   }
-  counter++;
+  userCounter++;
+}
+
+function displayComputerRoundResults(cc: PRS): void {
+  const elements: Record<number, HTMLParagraphElement> = {
+    1: computerRound1,
+    2: computerRound2,
+    3: computerRound3,
+    4: computerTie,
+  }
+
+  if (computerCounter in elements) {
+    let element = elements[computerCounter]!;
+    if (computerCounter <= 3) {
+      element.textContent = emojiMapping[cc];
+    } else {
+      element.textContent = emojiMapping[cc];
+    }
+  }
+  
+  computerCounter++;
 }
 
 // why did I need to delete this variable for the DOM to react correctly? 
@@ -139,7 +163,7 @@ function evaluateOverallWinner() {
   for (const [emoji, count] of counts.entries()) {
     // count does not need to diable buttons if verdict is tie.
     if (count > 1) {
-      match.textContent = `Match: ${emoji}`;
+      // match.textContent = `Match: ${emoji}`;
       disableBtns(btnsArr);
       resetbtn.disabled = false;
       break;
@@ -165,13 +189,14 @@ function main() {
   ];
 
   let count = 0;
-  // let interval = setInterval(() => {
+  let interval = setInterval(() => {
 
-  //   if (!condition) clearInterval(interval);
+    if (!condition) clearInterval(interval);
 
-  //   round1.textContent = `Round 1: ${emjois[count]}`;
-  //   count = (count + 1) % emjois.length;
-  // }, 500)
+    round1.textContent = `${emjois[count]}`;
+    computerRound1.textContent = `${emjois[count]}`;
+    count = (count + 1) % emjois.length;
+  }, 500)
 
 
   let tieArr: Verdict[] = [];
@@ -200,7 +225,8 @@ function main() {
         }
       }
 
-      displayRoundResults(verdict, uc, cc);
+      displayUserRoundResults(verdict, uc);
+      displayComputerRoundResults(cc);
       evaluateOverallWinner();
 
       comChoice.textContent = emojiMapping[cc];

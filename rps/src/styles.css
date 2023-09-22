@@ -28,7 +28,6 @@ html {
 .grid-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 2px dotted orange;
   justify-items: center;
 }
 
@@ -45,7 +44,7 @@ html {
 }
 
 .grid-user{
-  width: 75%;
+  width: 100%;
   grid-column: 1 / 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -61,6 +60,7 @@ html {
   grid-column: 1 / 3;
   justify-items: center;
   border-radius: 8px;
+  height: 5rem;
 }
 
 .user-rounds {

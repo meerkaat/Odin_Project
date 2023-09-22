@@ -1,17 +1,19 @@
 import { choices, emojiMapping, evaluateGame, getComputerChoice, getRandomElement, isValidChoice, Verdict, } from "./prs.js";
 import { assert } from "./assert.js";
-function getElementByIdOrThrow(selector, msg = "Element not found") {
+function getElementByIdOrThrow(selector, msg = `Element '${selector}' not found`) {
     const element = document.getElementById(selector);
     if (!element)
         throw new Error(msg);
     return element;
 }
-const comChoice = getElementByIdOrThrow("com-choice");
 const round1 = getElementByIdOrThrow("round1");
 const round2 = getElementByIdOrThrow("round2");
 const round3 = getElementByIdOrThrow("round3");
 const tieBreaker = getElementByIdOrThrow("tie-breaker");
-const match = getElementByIdOrThrow("match-result");
+const computerRound1 = getElementByIdOrThrow("computer-round1");
+const computerRound2 = getElementByIdOrThrow("computer-round2");
+const computerRound3 = getElementByIdOrThrow("computer-round3");
+const computerTie = getElementByIdOrThrow("computer-tie");
 const resetbtn = getElementByIdOrThrow("reset");
 resetbtn.disabled = true;
 resetbtn.addEventListener("click", () => {
@@ -31,7 +33,7 @@ function disableBtns(buttons) {
         btn.disabled = true;
     }
 }
-function changeOutlineColorViaVerdict(verdict, element) {
+function changeBackgroundColorViaVerdict(verdict, element) {
     let parentRounds = element.parentElement;
     if (parentRounds === null)
         throw new Error("Parent element is null");
@@ -41,30 +43,49 @@ function changeOutlineColorViaVerdict(verdict, element) {
     if (verdict === "Tie")
         parentRounds.style.backgroundColor = "rgba(252, 151, 0, 0.507)";
 }
-let counter = 1;
+let userCounter = 1;
+let computerCounter = 1;
 let roundResultsArr = [];
-function displayRoundResults(verdict, uc, cc) {
+function displayUserRoundResults(verdict, uc) {
     const elements = {
         1: round1,
         2: round2,
         3: round3,
         4: tieBreaker,
     };
-    if (counter in elements) {
-        const element = elements[counter];
+    if (userCounter in elements) {
+        const element = elements[userCounter];
         let result = emojiMapping[verdict];
-        if (counter <= 3) {
+        if (userCounter <= 3) {
             element.textContent = emojiMapping[uc];
-            changeOutlineColorViaVerdict(verdict, element);
+            changeBackgroundColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
         else {
             tieBreaker.textContent = emojiMapping[uc];
-            changeOutlineColorViaVerdict(verdict, element);
+            changeBackgroundColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
     }
-    counter++;
+    userCounter++;
+}
+function displayComputerRoundResults(cc) {
+    const elements = {
+        1: computerRound1,
+        2: computerRound2,
+        3: computerRound3,
+        4: computerTie,
+    };
+    if (computerCounter in elements) {
+        let element = elements[computerCounter];
+        if (computerCounter <= 3) {
+            element.textContent = emojiMapping[cc];
+        }
+        else {
+            element.textContent = emojiMapping[cc];
+        }
+    }
+    computerCounter++;
 }
 function evaluateOverallWinner() {
     const counts = new Map();
@@ -74,7 +95,6 @@ function evaluateOverallWinner() {
     }
     for (const [emoji, count] of counts.entries()) {
         if (count > 1) {
-            match.textContent = `Match: ${emoji}`;
             disableBtns(btnsArr);
             resetbtn.disabled = false;
             break;
@@ -94,6 +114,13 @@ function main() {
         emojiMapping.scissors,
     ];
     let count = 0;
+    let interval = setInterval(() => {
+        if (!condition)
+            clearInterval(interval);
+        round1.textContent = `${emjois[count]}`;
+        computerRound1.textContent = `${emjois[count]}`;
+        count = (count + 1) % emjois.length;
+    }, 500);
     let tieArr = [];
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
@@ -110,7 +137,8 @@ function main() {
                     verdict = evaluateGame(uc, cc);
                 }
             }
-            displayRoundResults(verdict, uc, cc);
+            displayUserRoundResults(verdict, uc);
+            displayComputerRoundResults(cc);
             evaluateOverallWinner();
             comChoice.textContent = emojiMapping[cc];
         });

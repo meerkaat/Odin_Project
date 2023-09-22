@@ -13,50 +13,48 @@
 </head>
 
 <body>
-  <div>
-    <div class="grid-wrapper">
-      <p id="user" class="player">🧙‍♂️</p>
-      <p id="computer" class="player">🤖</p>
-      <div class="grid-user">
-        <!-- <p class="user-rounds" id="test"></p> -->
-        <div class="rounds" id="round-one">
-          <p class="user-rounds box" id="round1">📜</p>
-          <span class="divider"></span>
-          <p class="computer-rounds box" id="computer-round1">📜</p>
-        </div>
-        <div class="rounds" id="round-two">
-          <p class="user-rounds box" id="round2">📜</p>
-          <span class="divider"></span>
-          <p class="computer-rounds box" id="computer-round2">📜</p>
-        </div>
-        <div class="rounds" id="round-three">
-          <p class="user-rounds box" id="round3">📜</p>
-          <span class="divider"></span>
-          <p class="computer-rounds box" id="computer-round3">📜</p>
-        </div>
-        <div class="rounds" id="round-tie">
-          <p class="user-rounds box" id="tie-breaker">📜</p>
-          <span class="divider"></span>
-          <p class="computer-rounds box" id="computer-tie">📜</p>
-        </div>
+
+  <div class="grid-wrapper">
+    <p id="user" class="player">🧙‍♂️</p>
+    <p id="computer" class="player">🤖</p>
+    <div class="grid-user">
+      <div class="rounds" id="round-one">
+        <p class="user-rounds box" id="round1"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-round1">❓ </p>
       </div>
-      <!-- <div class="grid-computer">
+      <div class="rounds" id="round-two">
+        <p class="user-rounds box" id="round2"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-round2"></p>
+      </div>
+      <div class="rounds" id="round-three">
+        <p class="user-rounds box" id="round3"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-round3"></p>
+      </div>
+      <div class="rounds" id="round-tie">
+        <p class="user-rounds box" id="tie-breaker"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-tie"></p>
+      </div>
+    </div>
+    <!-- <div class="grid-computer">
         <p class="computer-rounds" id="computer-round1">Round 1:</p>
         <p class="computer-rounds" id="computer-round2">Round 2:</p>
         <p class="computer-rounds" id="computer-round3">Round 3:</p>
         <p class="computer-rounds" id="computer-tie-breaker">Tie Breaker: </p>
       </div> -->
-      <p id="match-result">Match: </p>
-      <p>Computer: <span id="com-choice">❓</span></p>
-      <span>User: </span>
-      <div class="grid-emjois">
-        <button class="btn-emjois" id="btn-paper" data-choice="paper">📜</button>
-        <button class="btn-emjois" id="btn-rock" data-choice="rock">🗿</button>
-        <button class="btn-emjois" id="btn-scissors" data-choice="scissors">⚔️</button>
-        <button class="btn-reset" id="reset">Reset</button>
-      </div>
+    <!-- <p id="match-result">Match: </p>
+    <p>Computer: <span id="com-choice">❓</span></p> -->
+    <div class="grid-emjois">
+      <button class="btn-emjois" id="btn-paper" data-choice="paper">📜</button>
+      <button class="btn-emjois" id="btn-rock" data-choice="rock">🪨</button>
+      <button class="btn-emjois" id="btn-scissors" data-choice="scissors">⚔️</button>
+      <button class="btn-reset" id="reset">Reset</button>
     </div>
   </div>
+
 
 </body>
 
