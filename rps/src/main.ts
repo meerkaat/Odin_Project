@@ -23,8 +23,6 @@ function getElementByIdOrThrow<T extends HTMLElement = HTMLElement>(
   return element as T;
 }
 
-
-// const comChoice = getElementByIdOrThrow<HTMLSpanElement>("com-choice");
 const round1 = getElementByIdOrThrow<HTMLParagraphElement>("round1");
 const round2 = getElementByIdOrThrow<HTMLParagraphElement>("round2");
 const round3 = getElementByIdOrThrow<HTMLParagraphElement>("round3");
@@ -33,14 +31,12 @@ const computerRound1 = getElementByIdOrThrow<HTMLParagraphElement>("computer-rou
 const computerRound2 = getElementByIdOrThrow<HTMLParagraphElement>("computer-round2");
 const computerRound3 = getElementByIdOrThrow<HTMLParagraphElement>("computer-round3");
 const computerTie = getElementByIdOrThrow<HTMLParagraphElement>("computer-tie");
-// const match = getElementByIdOrThrow<HTMLParagraphElement>("match-result");
 const resetbtn = getElementByIdOrThrow<HTMLButtonElement>("reset");
 
 resetbtn.disabled = true;
 resetbtn.addEventListener("click", () => {
   location.reload();
 })
-
 
 function btns(): HTMLButtonElement[] {
   let buttons: HTMLButtonElement[] = [];
@@ -198,7 +194,6 @@ function main() {
     count = (count + 1) % emjois.length;
   }, 500)
 
-
   let tieArr: Verdict[] = [];
 
   btns().forEach((btn) => {
@@ -228,8 +223,6 @@ function main() {
       displayUserRoundResults(verdict, uc);
       displayComputerRoundResults(cc);
       evaluateOverallWinner();
-
-      comChoice.textContent = emojiMapping[cc];
     });
   });
 }

@@ -140,7 +140,6 @@ function main() {
             displayUserRoundResults(verdict, uc);
             displayComputerRoundResults(cc);
             evaluateOverallWinner();
-            comChoice.textContent = emojiMapping[cc];
         });
     });
 }
