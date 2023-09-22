@@ -20,9 +20,8 @@ What happens when win?
 - [] layout
   - [x] player emojis
   - [x] rounds
-  - [] do something with tie games???
-  - [] match point
-  - [] buttons
+  - [x] do something with tie games???
+  - [] buttons style
 
 - [x] change round border color for win/lose/tie
 
@@ -31,9 +30,9 @@ What happens when win?
     - check comments on function
   - [] stop at end of round and move to, and start, on next round
 
-- [] emoji state
+- [x] emoji state
   - [x] display user choice
-  - [] display computer choice
+  - [x] display computer choice
 
 - [] twemoji?
 
