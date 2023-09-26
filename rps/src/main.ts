@@ -113,8 +113,31 @@ function displayComputerRoundResults(cc: PRS): void {
       element.textContent = emojiMapping[cc];
     }
   }
-  
+
   computerCounter++;
+}
+
+type Callback = (
+  stop: () => void,
+  emoji: EmojiOptions,
+) => void;
+
+function cycleEmojis(callback: Callback): void {
+  const emojis = [
+    emojiMapping.paper,
+    emojiMapping.rock,
+    emojiMapping.scissors,
+  ];
+
+  let index = 0;
+  let stop = () => clearInterval(interval);
+
+  let interval = setInterval(() => {
+    round1.textContent = `${emojis[index]}`;
+    computerRound1.textContent = `${emojis[index]}`;
+    callback(stop, emojis[index]!);
+    index = (index + 1) % emojis.length;
+  }, 100)
 }
 
 // why did I need to delete this variable for the DOM to react correctly? 
@@ -176,32 +199,40 @@ function forceNoTie(cc: PRS): PRS {
 //*------------------------------------------------------------------------------------------------*/
 
 function main() {
-  let condition = true;
+  // let condition = true;
 
-  const emjois = [
-    emojiMapping.paper,
-    emojiMapping.rock,
-    emojiMapping.scissors,
-  ];
+  // const emjois = [
+  //   emojiMapping.paper,
+  //   emojiMapping.rock,
+  //   emojiMapping.scissors,
+  // ];
 
-  let count = 0;
-  let interval = setInterval(() => {
+  // let count = 0;
+  // let interval = setInterval(() => {
 
-    if (!condition) clearInterval(interval);
+  //   if (!condition) clearInterval(interval);
 
-    round1.textContent = `${emjois[count]}`;
-    computerRound1.textContent = `${emjois[count]}`;
-    count = (count + 1) % emjois.length;
-  }, 500)
+  //   round1.textContent = `${emjois[count]}`;
+  //   computerRound1.textContent = `${emjois[count]}`;
+  //   count = (count + 1) % emjois.length;
+  // }, 500)
 
   let tieArr: Verdict[] = [];
+  let userChoice = '';
+  let computerChoice = '';
+
+  cycleEmojis(
+    (stop, emoji) => {
+      if (emoji === userChoice) {
+        computerRound1.textContent = computerChoice;
+        stop();
+      }
+    }
+  );
 
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
-      condition = false;
-
-      console.log("Second", tieArr);
-      const uc = btn.getAttribute("data-choice");
+      let uc = btn.getAttribute("data-choice");
       let cc = getComputerChoice();
 
       assert(
@@ -209,6 +240,11 @@ function main() {
         "Not a valid choice",
       );
 
+      userChoice = emojiMapping[uc];
+      computerChoice = emojiMapping[cc]
+
+      // user = uc;
+      // console.log(user);
       let verdict = evaluateGame(uc, cc);
 
       if (verdict === Verdict.Tie) {
@@ -225,5 +261,6 @@ function main() {
       evaluateOverallWinner();
     });
   });
+
 }
 main();

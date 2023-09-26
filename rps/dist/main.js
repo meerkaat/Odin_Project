@@ -87,6 +87,21 @@ function displayComputerRoundResults(cc) {
     }
     computerCounter++;
 }
+function cycleEmojis(callback) {
+    const emojis = [
+        emojiMapping.paper,
+        emojiMapping.rock,
+        emojiMapping.scissors,
+    ];
+    let index = 0;
+    let stop = () => clearInterval(interval);
+    let interval = setInterval(() => {
+        round1.textContent = `${emojis[index]}`;
+        computerRound1.textContent = `${emojis[index]}`;
+        callback(stop, emojis[index]);
+        index = (index + 1) % emojis.length;
+    }, 100);
+}
 function evaluateOverallWinner() {
     const counts = new Map();
     for (const value of roundResultsArr) {
@@ -107,28 +122,22 @@ function forceNoTie(cc) {
     return newCC;
 }
 function main() {
-    let condition = true;
-    const emjois = [
-        emojiMapping.paper,
-        emojiMapping.rock,
-        emojiMapping.scissors,
-    ];
-    let count = 0;
-    let interval = setInterval(() => {
-        if (!condition)
-            clearInterval(interval);
-        round1.textContent = `${emjois[count]}`;
-        computerRound1.textContent = `${emjois[count]}`;
-        count = (count + 1) % emjois.length;
-    }, 500);
     let tieArr = [];
+    let userChoice = '';
+    let computerChoice = '';
+    cycleEmojis((stop, emoji) => {
+        if (emoji === userChoice) {
+            computerRound1.textContent = computerChoice;
+            stop();
+        }
+    });
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
-            condition = false;
-            console.log("Second", tieArr);
-            const uc = btn.getAttribute("data-choice");
+            let uc = btn.getAttribute("data-choice");
             let cc = getComputerChoice();
             assert(typeof uc === "string" && isValidChoice(uc), "Not a valid choice");
+            userChoice = emojiMapping[uc];
+            computerChoice = emojiMapping[cc];
             let verdict = evaluateGame(uc, cc);
             if (verdict === Verdict.Tie) {
                 tieArr.push(verdict);
