@@ -73,16 +73,25 @@ let userCounter: number = 1;
 let computerCounter: number = 1;
 let roundResultsArr: EmojiOptions[] = [];
 
-function displayUserRoundResults(verdict: Verdict, uc: PRS): void {
-  const elements: Record<number, HTMLElement> = {
-    1: round1,
-    2: round2,
-    3: round3,
-    4: tieBreaker,
-  };
+type RoundElements = Record<number, HTMLParagraphElement>;
 
+const userElements: RoundElements = {
+  1: round1,
+  2: round2,
+  3: round3,
+  4: tieBreaker,
+};
+
+const computerElements: RoundElements = {
+  1: computerRound1,
+  2: computerRound2,
+  3: computerRound3,
+  4: computerTie,
+}
+
+function displayUserRoundResults(elements: RoundElements, verdict: Verdict, uc: PRS): void {
   if (userCounter in elements) { // if "userCounter" is a key in the "elements" object...
-    const element = elements[userCounter]!;
+    let element = elements[userCounter]!;
     let result = emojiMapping[verdict];
     if (userCounter <= 3) {
       element.textContent = emojiMapping[uc];
@@ -94,17 +103,11 @@ function displayUserRoundResults(verdict: Verdict, uc: PRS): void {
       roundResultsArr.push(result);
     }
   }
+
   userCounter++;
 }
 
-function displayComputerRoundResults(cc: PRS): void {
-  const elements: Record<number, HTMLParagraphElement> = {
-    1: computerRound1,
-    2: computerRound2,
-    3: computerRound3,
-    4: computerTie,
-  }
-
+function displayComputerRoundResults(elements: RoundElements, cc: PRS): void {
   if (computerCounter in elements) {
     let element = elements[computerCounter]!;
     if (computerCounter <= 3) {
@@ -122,7 +125,9 @@ type Callback = (
   emoji: EmojiOptions,
 ) => void;
 
-function cycleEmojis(callback: Callback): void {
+function cycleEmojis(
+  callback: Callback
+): void {
   const emojis = [
     emojiMapping.paper,
     emojiMapping.rock,
@@ -131,13 +136,17 @@ function cycleEmojis(callback: Callback): void {
 
   let index = 0;
   let stop = () => clearInterval(interval);
-
+  
   let interval = setInterval(() => {
-    round1.textContent = `${emojis[index]}`;
-    computerRound1.textContent = `${emojis[index]}`;
+    let userEl = userElements[userCounter];
+    let computerEl = computerElements[computerCounter];
+    userEl.textContent = `${emojis[index]}`;
+    computerEl.textContent = `${emojis[index]}`;
     callback(stop, emojis[index]!);
     index = (index + 1) % emojis.length;
   }, 100)
+
+
 }
 
 // why did I need to delete this variable for the DOM to react correctly? 
@@ -171,7 +180,7 @@ function cycleEmojis(callback: Callback): void {
 //   }, 500)
 // }
 
-function evaluateOverallWinner() {
+function evaluateOverallWinner(): boolean {
   const counts = new Map<EmojiOptions, number>();
 
   for (const value of roundResultsArr) {
@@ -179,15 +188,19 @@ function evaluateOverallWinner() {
     counts.delete(emojiMapping.Tie);
   }
 
+  let condition = false;
+
   for (const [emoji, count] of counts.entries()) {
     // count does not need to diable buttons if verdict is tie.
     if (count > 1) {
       // match.textContent = `Match: ${emoji}`;
       disableBtns(btnsArr);
       resetbtn.disabled = false;
+      condition = true;
       break;
     }
   }
+  return condition;
 }
 
 function forceNoTie(cc: PRS): PRS {
@@ -199,24 +212,6 @@ function forceNoTie(cc: PRS): PRS {
 //*------------------------------------------------------------------------------------------------*/
 
 function main() {
-  // let condition = true;
-
-  // const emjois = [
-  //   emojiMapping.paper,
-  //   emojiMapping.rock,
-  //   emojiMapping.scissors,
-  // ];
-
-  // let count = 0;
-  // let interval = setInterval(() => {
-
-  //   if (!condition) clearInterval(interval);
-
-  //   round1.textContent = `${emjois[count]}`;
-  //   computerRound1.textContent = `${emjois[count]}`;
-  //   count = (count + 1) % emjois.length;
-  // }, 500)
-
   let tieArr: Verdict[] = [];
   let userChoice = '';
   let computerChoice = '';
@@ -224,6 +219,7 @@ function main() {
   cycleEmojis(
     (stop, emoji) => {
       if (emoji === userChoice) {
+        round1.textContent = userChoice;
         computerRound1.textContent = computerChoice;
         stop();
       }
@@ -240,11 +236,6 @@ function main() {
         "Not a valid choice",
       );
 
-      userChoice = emojiMapping[uc];
-      computerChoice = emojiMapping[cc]
-
-      // user = uc;
-      // console.log(user);
       let verdict = evaluateGame(uc, cc);
 
       if (verdict === Verdict.Tie) {
@@ -256,9 +247,18 @@ function main() {
         }
       }
 
-      displayUserRoundResults(verdict, uc);
-      displayComputerRoundResults(cc);
-      evaluateOverallWinner();
+      userChoice = emojiMapping[uc];
+      computerChoice = emojiMapping[cc]
+
+      cycleEmojis(
+        (stop, emoji) => {
+          if (evaluateOverallWinner()) stop();
+        }
+      );
+
+      displayUserRoundResults(userElements, verdict, uc);
+      displayComputerRoundResults(computerElements, cc);
+      
     });
   });
 
