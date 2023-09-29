@@ -14,7 +14,7 @@
 
     "module": "esnext",
     "moduleDetection": "force",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     // "moduleResolution": "bundler",
     // "allowImportingTsExtensions": true,
     "isolatedModules": true,

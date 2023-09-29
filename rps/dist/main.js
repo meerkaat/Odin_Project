@@ -102,7 +102,7 @@ function cycleEmojis(callback) {
         computerEl.textContent = `${emojis[index]}`;
         callback(stop, emojis[index]);
         index = (index + 1) % emojis.length;
-    }, 100);
+    }, 300);
 }
 function evaluateOverallWinner() {
     const counts = new Map();
@@ -132,8 +132,6 @@ function main() {
     let computerChoice = '';
     cycleEmojis((stop, emoji) => {
         if (emoji === userChoice) {
-            round1.textContent = userChoice;
-            computerRound1.textContent = computerChoice;
             stop();
         }
     });
@@ -152,10 +150,6 @@ function main() {
             }
             userChoice = emojiMapping[uc];
             computerChoice = emojiMapping[cc];
-            cycleEmojis((stop, emoji) => {
-                if (evaluateOverallWinner())
-                    stop();
-            });
             displayUserRoundResults(userElements, verdict, uc);
             displayComputerRoundResults(computerElements, cc);
         });

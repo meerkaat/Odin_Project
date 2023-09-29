@@ -16,6 +16,8 @@ What happens when win?
 
 # To-do
 
+- [] move node_modules to gitignore (Ref: https://github.com/github/gitignore/blob/main/Node.gitignore)
+
 ## UI
 - [] layout
   - [x] player emojis
@@ -56,6 +58,8 @@ What happens when win?
 2) See comments on `cycleEmjoji()` for TS shenanigans. 
 
 3) `keyof typeof`
+
+4) talk about moduleDetection
 
 ---
 
