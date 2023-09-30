@@ -29,6 +29,7 @@
 
     "outDir": "./dist",
     // "noEmit": true,
+    "sourceMap": true,
   },
   "include": [
     "src/**/*"

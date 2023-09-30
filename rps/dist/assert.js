@@ -5,3 +5,4 @@ export function assert(expr, msg) {
     if (!expr)
         throw new AssertionError(msg);
 }
+//# sourceMappingURL=assert.js.map

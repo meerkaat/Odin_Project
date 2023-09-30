@@ -9,7 +9,7 @@ One round of rps.
 What happens when win?
   - rps emoji stays in hover state for user and computer
   - color background of winner/loser
-    - winner - green
+    - winner - green}
     - loser - red
 
 ---

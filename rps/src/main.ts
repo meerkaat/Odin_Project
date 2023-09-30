@@ -126,8 +126,8 @@ type Callback = (
 ) => void;
 
 function cycleEmojis(
-  callback: Callback
-): void {
+  // callback: Callback
+): () => void {
   const emojis = [
     emojiMapping.paper,
     emojiMapping.rock,
@@ -136,15 +136,16 @@ function cycleEmojis(
 
   let index = 0;
   let stop = () => clearInterval(interval);
-  
+
   let interval = setInterval(() => {
     let userEl = userElements[userCounter];
     let computerEl = computerElements[computerCounter];
     userEl.textContent = `${emojis[index]}`;
     computerEl.textContent = `${emojis[index]}`;
-    callback(stop, emojis[index]!);
+    // callback(stop, emojis[index]!);
     index = (index + 1) % emojis.length;
-  }, 300)
+  }, 150)
+  return () => stop()
 }
 
 // why did I need to delete this variable for the DOM to react correctly? 
@@ -214,16 +215,17 @@ function main() {
   let userChoice = '';
   let computerChoice = '';
 
-  cycleEmojis(
-    (stop, emoji) => {
-      if (emoji === userChoice) {
-        // round1.textContent = userChoice;
-        // computerRound1.textContent = computerChoice;
-        stop();
-      }
-    }
-  );
+  // cycleEmojis(
+  //   (stop, emoji) => {
+  //     if (emoji === userChoice) {
+  //       round1.textContent = userChoice;
+  //       computerRound1.textContent = computerChoice;
+  //       stop();
+  //     }
+  //   }
+  // );
 
+  let condition = true;
   btns().forEach((btn) => {
     btn.addEventListener("click", (ev) => {
       let uc = btn.getAttribute("data-choice");
@@ -248,18 +250,19 @@ function main() {
       userChoice = emojiMapping[uc];
       computerChoice = emojiMapping[cc]
 
-      // cycleEmojis(
-      //   (stop, emoji) => {
-      //     if (evaluateOverallWinner()) stop();
-      //   }
-      // );
+      if (!condition) {
+        cycleEmojis();
+      } else {
+        let stop = cycleEmojis();
+      }
+      
+
 
 
       displayUserRoundResults(userElements, verdict, uc);
       displayComputerRoundResults(computerElements, cc);
-      
+
     });
   });
-
 }
 main();

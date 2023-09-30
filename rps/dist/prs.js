@@ -38,3 +38,4 @@ export const emojiMapping = {
     [Verdict.Computer]: "🇱",
     [Verdict.Tie]: "🤷",
 };
+//# sourceMappingURL=prs.js.map
