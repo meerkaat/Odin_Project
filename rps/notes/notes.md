@@ -9,7 +9,7 @@ One round of rps.
 What happens when win?
   - rps emoji stays in hover state for user and computer
   - color background of winner/loser
-    - winner - green}
+    - winner - green
     - loser - red
 
 ---
@@ -27,10 +27,10 @@ What happens when win?
 
 - [x] change round border color for win/lose/tie
 
-- [] cycle emojis for rounds
+- [x] cycle emojis for rounds
   - [x] figure out how to cycle emjois
     - check comments on function
-  - [] stop at end of round and move to, and start, on next round
+  - [x] stop at end of round and move to, and start, on next round
 
 - [x] emoji state
   - [x] display user choice
