@@ -81,6 +81,10 @@ npm install -D @types/web
 ```
 
 ```js
+const items = [...document.getElementsByClassName('grid-item')];
+```
+
+```js
 function getKeyByValue(object, value) {
       return Object.keys(object).find(key => object[key] === value);
     }

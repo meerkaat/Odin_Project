@@ -26,22 +26,11 @@ function btns() {
     }
     return buttons;
 }
-;
 const btnsArr = btns();
 function disableBtns(buttons) {
     for (const btn of buttons) {
         btn.disabled = true;
     }
-}
-function changeBackgroundColorViaVerdict(verdict, element) {
-    let parentRounds = element.parentElement;
-    if (parentRounds === null)
-        throw new Error("Parent element is null");
-    verdict === "User"
-        ? parentRounds.style.backgroundColor = "rgba(0, 117, 6, 0.603)"
-        : parentRounds.style.backgroundColor = "rgba(221, 46, 69, 0.808)";
-    if (verdict === "Tie")
-        parentRounds.style.backgroundColor = "rgba(252, 151, 0, 0.507)";
 }
 let userCounter = 1;
 let computerCounter = 1;
@@ -58,36 +47,48 @@ const computerElements = {
     3: computerRound3,
     4: computerTie,
 };
+function changeBackgroundColorViaVerdict(verdict, element) {
+    let parentRounds = element.parentElement;
+    if (parentRounds === null)
+        throw new Error("Parent element is null");
+    verdict === "User"
+        ? parentRounds.style.backgroundColor = "rgba(0, 117, 6, 0.603)"
+        : parentRounds.style.backgroundColor = "rgba(221, 46, 69, 0.808)";
+    if (verdict === "Tie") {
+        parentRounds.style.backgroundColor = "rgba(252, 151, 0, 0.507)";
+    }
+}
 function displayUserRoundResults(elements, verdict, uc) {
+    let element;
     if (userCounter in elements) {
-        let element = elements[userCounter];
+        element = elements[userCounter];
         let result = emojiMapping[verdict];
         if (userCounter <= 3) {
             element.textContent = emojiMapping[uc];
-            changeBackgroundColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
+            userCounter++;
         }
         else {
             tieBreaker.textContent = emojiMapping[uc];
-            changeBackgroundColorViaVerdict(verdict, element);
             roundResultsArr.push(result);
         }
     }
-    userCounter++;
+    assert(element !== undefined, "Element is undefined");
+    return element;
 }
 function displayComputerRoundResults(elements, cc) {
     if (computerCounter in elements) {
         let element = elements[computerCounter];
         if (computerCounter <= 3) {
             element.textContent = emojiMapping[cc];
+            computerCounter++;
         }
         else {
             element.textContent = emojiMapping[cc];
         }
     }
-    computerCounter++;
 }
-function cycleEmojis() {
+function cycleEmojis(callback) {
     const emojis = [
         emojiMapping.paper,
         emojiMapping.rock,
@@ -98,19 +99,22 @@ function cycleEmojis() {
     let interval = setInterval(() => {
         let userEl = userElements[userCounter];
         let computerEl = computerElements[computerCounter];
-        userEl.textContent = `${emojis[index]}`;
-        computerEl.textContent = `${emojis[index]}`;
+        callback(stop);
+        if (!evaluateOverallWinner()) {
+            userEl.textContent = `${emojis[index]}`;
+            computerEl.textContent = `${emojis[index]}`;
+        }
         index = (index + 1) % emojis.length;
     }, 150);
     return () => stop();
 }
 function evaluateOverallWinner() {
+    let condition = false;
     const counts = new Map();
     for (const value of roundResultsArr) {
         counts.set(value, (counts.get(value) ?? 0) + 1);
         counts.delete(emojiMapping.Tie);
     }
-    let condition = false;
     for (const [emoji, count] of counts.entries()) {
         if (count > 1) {
             disableBtns(btnsArr);
@@ -128,9 +132,10 @@ function forceNoTie(cc) {
 }
 function main() {
     let tieArr = [];
-    let userChoice = '';
-    let computerChoice = '';
-    let condition = true;
+    cycleEmojis((stop) => {
+        if (evaluateOverallWinner())
+            stop();
+    });
     btns().forEach((btn) => {
         btn.addEventListener("click", (ev) => {
             let uc = btn.getAttribute("data-choice");
@@ -144,16 +149,10 @@ function main() {
                     verdict = evaluateGame(uc, cc);
                 }
             }
-            userChoice = emojiMapping[uc];
-            computerChoice = emojiMapping[cc];
-            if (!condition) {
-                cycleEmojis();
-            }
-            else {
-                let stop = cycleEmojis();
-            }
-            displayUserRoundResults(userElements, verdict, uc);
+            let roundResultEl = displayUserRoundResults(userElements, verdict, uc);
             displayComputerRoundResults(computerElements, cc);
+            changeBackgroundColorViaVerdict(verdict, roundResultEl);
+            evaluateOverallWinner();
         });
     });
 }

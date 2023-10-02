@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Paper, Rock, Scissors</title>
+
+  <!-- <link rel="icon" href="/icon.png" /> -->
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="module" src="../dist/main.js"></script>
+</head>
+
+<body>
+
+  <div class="grid-wrapper">
+
+    <div class="grid-emjois">
+      <button class="btn-emjois" id="btn-paper" data-choice="paper">📜</button>
+      <button class="btn-emjois" id="btn-rock" data-choice="rock">🪨</button>
+      <button class="btn-emjois" id="btn-scissors" data-choice="scissors">⚔️</button>
+      <button class="btn-emjois btn-reset" id="reset">Replay</button>
+    </div>
+
+    <p id="user" class="player">🧙‍♂️</p>
+    <p id="computer" class="player">🤖</p>
+
+    <div class="grid-rounds">
+
+      <div class="rounds" id="round-one">
+        <p class="user-rounds box" id="round1"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-round1"></p>
+      </div>
+
+      <div class="rounds" id="round-two">
+        <p class="user-rounds box" id="round2"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-round2"></p>
+      </div>
+
+      <div class="rounds" id="round-three">
+        <p class="user-rounds box" id="round3"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-round3"></p>
+      </div>
+
+      <div class="rounds" id="round-tie">
+        <p class="user-rounds box" id="tie-breaker"></p>
+        <span class="divider"></span>
+        <p class="computer-rounds box" id="computer-tie"></p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>
