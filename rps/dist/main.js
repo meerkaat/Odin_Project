@@ -16,15 +16,9 @@ const computerRound3 = getElementByIdOrThrow("computer-round3");
 const computerTie = getElementByIdOrThrow("computer-tie");
 const resetbtn = getElementByIdOrThrow("reset");
 resetbtn.disabled = true;
-resetbtn.addEventListener("click", () => {
-    location.reload();
-});
+resetbtn.addEventListener("click", () => location.reload());
 function btns() {
-    let buttons = [];
-    for (const prs of choices) {
-        buttons.push(getElementByIdOrThrow(`btn-${prs}`));
-    }
-    return buttons;
+    return choices.map((prs) => getElementByIdOrThrow(`btn-${prs}`));
 }
 const btnsArr = btns();
 function disableBtns(buttons) {

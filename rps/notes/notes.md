@@ -53,12 +53,11 @@ What happens when win?
 ---
 
 # Questions
-1) Why did I need to delete this variable for the DOM to react         correctly? It would not cycle emjois in `round1` if I only deleted the    `test div` in the HTML. 
+<!-- 1) Why did I need to delete this variable for the DOM to react         correctly? It would not cycle emjois in `round1` if I only deleted the    `test div` in the HTML.  -->
+<!-- 
+2) See comments on `cycleEmjoji()` for TS shenanigans.  -->
 
-2) See comments on `cycleEmjoji()` for TS shenanigans. 
-
-3) `keyof typeof`
-
+<!-- }
 4) talk about moduleDetection
 
 ---

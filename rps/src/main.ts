@@ -40,18 +40,10 @@ const computerTie = getElementByIdOrThrow<HTMLParagraphElement>("computer-tie");
 const resetbtn = getElementByIdOrThrow<HTMLButtonElement>("reset");
 
 resetbtn.disabled = true;
-resetbtn.addEventListener("click", () => {
-  location.reload();
-});
+resetbtn.addEventListener("click", () => location.reload());
 
 function btns(): HTMLButtonElement[] {
-  let buttons: HTMLButtonElement[] = [];
-  for (const prs of choices) {
-    buttons.push(
-      getElementByIdOrThrow<HTMLButtonElement>(`btn-${prs}`),
-    );
-  }
-  return buttons;
+  return choices.map((prs) => getElementByIdOrThrow(`btn-${prs}`));
 }
 
 const btnsArr: HTMLButtonElement[] = btns();

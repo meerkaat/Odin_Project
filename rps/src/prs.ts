@@ -4,7 +4,7 @@ export const choices = [
   "rock",
   "paper",
   "scissors",
-] as const satisfies readonly [PRS, PRS, PRS]; 
+] as const satisfies readonly [PRS, PRS, PRS];
 
 export function isValidChoice(input: string): input is PRS {
   return choices.includes(input as PRS);
@@ -16,7 +16,7 @@ export function getRandomElement<T>(array: readonly T[]): T {
 
 export const getComputerChoice = (): PRS => {
   return getRandomElement(choices);
-}
+};
 
 // user is input/button string of "paper, rock, or scissors" --> 0, 1, 2
 
